@@ -4,8 +4,8 @@
     "description": "Mobile HTML5 web gamepad for the smartphone.",
     "main": "index.js",
     "scripts": {
-        "dev": "parcel src/index.html",
-        "build": "parcel build src/index.html -d docs --public-url ./",
+        "dev": "concurrently \"copyfiles -u 1 src/assets/* dist\"  \"parcel src/index.html\"",
+        "build": "concurrently \"copyfiles -u 1 src/assets/* docs\" \"parcel build src/index.html -d docs --public-url ./\"",
         "version:patch": "npm version patch"
     },
     "repository": {
@@ -27,6 +27,8 @@
     "homepage": "https://github.com/marcoklein/mobile-browser-gamepad#readme",
     "devDependencies": {
         "@types/jquery": "^3.3.29",
+        "concurrently": "^4.1.0",
+        "copyfiles": "^2.1.0",
         "parcel-bundler": "^1.12.3",
         "typescript": "^3.4.5"
     },
