@@ -1,6 +1,6 @@
 {
     "name": "mobile-browser-gamepad",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Mobile HTML5 web gamepad for the smartphone.",
     "main": "index.js",
     "scripts": {
