@@ -11,4 +11,4 @@ var e,t=arguments[3],n=require("process");!function(e,t){"use strict";"object"==
 },{}],"7QCb":[function(require,module,exports) {
 "use strict";var e=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}};exports.__esModule=!0;var t=e(require("jquery")),n=e(require("screenfull")),i=n.default,r=document.getElementById("gamepadCanvas"),u=r.getContext("2d");function o(){u.beginPath(),u.arc(95,50,40,0,2*Math.PI),u.stroke()}function d(){i.toggle()}function a(){window.addEventListener("resize",l,!1),t.default("#fullscreenButton").on("click",d),l()}function l(){r.width=window.innerWidth,r.height=window.innerHeight,o()}a();
 },{"jquery":"juYr","screenfull":"BNKO"}]},{},["7QCb"], null)
-//# sourceMappingURL=web-browser-gamepad/src.032d21cd.js.map
+//# sourceMappingURL=/src.032d21cd.js.map
