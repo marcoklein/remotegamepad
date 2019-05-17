@@ -1,0 +1,31 @@
+{
+    "name": "mobile-browser-gamepad",
+    "version": "0.0.1",
+    "description": "Mobile HTML5 web gamepad for the smartphone.",
+    "main": "index.js",
+    "scripts": {
+        "dev": "parcel src/index.html",
+        "build": "parcel build src/index.html -d docs"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/marcoklein/mobile-browser-gamepad.git"
+    },
+    "keywords": [
+        "Gamepad",
+        "Mobile",
+        "Web",
+        "HTML5",
+        "Smartphone"
+    ],
+    "author": "Marco Klein",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/marcoklein/mobile-browser-gamepad/issues"
+    },
+    "homepage": "https://github.com/marcoklein/mobile-browser-gamepad#readme",
+    "devDependencies": {
+        "parcel-bundler": "^1.12.3",
+        "typescript": "^3.4.5"
+    }
+}
