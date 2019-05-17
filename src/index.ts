@@ -26,10 +26,16 @@ function requestFullscreen() {
  * Initialize canvas to fit window size and draw.
  */
 function initialize() {
+    // init fullscreen button
+    if (fullscreenPlugin.enabled) {
+        $('#fullscreenButton').on('click', requestFullscreen);
+    } else {
+        // not allowed to enter fullscreen
+        $('#fullscreenButton').remove();
+    }
+
+    // init resize behavior
     window.addEventListener('resize', resizeCanvas, false);
-
-    $('#fullscreenButton').on('click', requestFullscreen);
-
     resizeCanvas();
 }
 
