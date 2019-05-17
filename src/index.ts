@@ -33,6 +33,14 @@ function initialize() {
         // not allowed to enter fullscreen
         $('#fullscreenButton').remove();
     }
+    // show button only if fullscreen mode is not active
+    fullscreenPlugin.on('change', () => {
+        if (fullscreenPlugin.isFullscreen) {
+            $('#fullscreenButton').hide();
+        } else {
+            $('#fullscreenButton').show();
+        }
+    })
 
     // init resize behavior
     window.addEventListener('resize', resizeCanvas, false);

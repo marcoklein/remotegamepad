@@ -12,7 +12,9 @@ html, body {
 }
 /* Show fullscreenButton on top */
 #fullscreenButton {
+    margin: auto 0;
     position: absolute;
     top: 5%;
-    left: 50%;
+    right: 5%;
+    cursor: pointer;
 }
