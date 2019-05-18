@@ -2,6 +2,8 @@
 /**
  * 2D math vector as helper.
  * 
+ https://github.com/matthiasferch/tsm/blob/master/src/vec2.ts
+ * 
  * @author Marco Klein
  */
 export class Vector {

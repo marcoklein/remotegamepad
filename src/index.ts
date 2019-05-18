@@ -1,10 +1,13 @@
 import $ from 'jquery';
+import { ConnectionManager } from './ConnectionManager';
 import screenfull, {Screenfull} from 'screenfull';
 let fullscreenPlugin: Screenfull = <Screenfull> screenfull;
 
 
 let gamepadCanvas: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById('gamepadCanvas');
 let ctx = gamepadCanvas.getContext('2d');
+
+let connectionManager: ConnectionManager = new ConnectionManager();
 
 /**
  * Draw current state.
@@ -40,7 +43,10 @@ function initialize() {
         } else {
             $('#fullscreenButton').show();
         }
-    })
+    });
+
+    // later provide id
+    connectionManager.connect('CATCHME2');
 
     // init resize behavior
     window.addEventListener('resize', resizeCanvas, false);
