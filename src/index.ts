@@ -1,14 +1,17 @@
 import $ from 'jquery';
 import { ConnectionManager } from './ConnectionManager';
 import screenfull, {Screenfull} from 'screenfull';
+import { Pad } from './Pad';
 let fullscreenPlugin: Screenfull = <Screenfull> screenfull;
 
 
-let gamepadCanvas: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById('gamepadCanvas');
+let gamepadCanvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById('gamepadCanvas');
 let ctx = gamepadCanvas.getContext('2d');
 
 let connectionManager: ConnectionManager = new ConnectionManager();
 
+
+let pad = new Pad();
 /**
  * Draw current state.
  */
@@ -16,6 +19,7 @@ function draw() {
     ctx.beginPath();
     ctx.arc(95, 50, 40, 0, 2 * Math.PI);
     ctx.stroke();
+    pad.draw(ctx);
 }
 
 /**
@@ -46,7 +50,7 @@ function initialize() {
     });
 
     // later provide id
-    connectionManager.connect('CATCHME2');
+    //connectionManager.connect('CATCHME2');
 
     // init resize behavior
     window.addEventListener('resize', resizeCanvas, false);

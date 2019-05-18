@@ -32,7 +32,6 @@ export class Vector {
         } else {
             this.set(x, y);
         }
-        let v = new Vector();
     }
 
     /**
