@@ -21,6 +21,10 @@
 
 <body> <!-- TODO initially hide body and show if loaded-->
 
+    <!-- Canvas for rendering -->
+    <canvas id="gamepadCanvas" width="200" height="100"></canvas>
+
+
     <div id="images" style="display: none">
         <!-- Loaded images for canvas -->
         <img id="padDarkImage" src="assets/padDark.png">
@@ -28,14 +32,10 @@
     </div>
 
     <!-- Fullscreen button -->
-    <div id="overlay">
-        <input id="fullscreenButton" src="assets/buttonExpand.png" type="image" alt="Fullscreen">
-        <input id="buttonA" src="assets/buttonA.png" type="image" alt="Button A">
-    </div>
+    <input class="overlay" id="fullscreenButton" src="assets/buttonExpand.png" type="image" alt="Fullscreen">
+    <input class="overlay" id="buttonA" src="assets/buttonA.png" type="image" alt="Button A">
 
 
-    <!-- Canvas for rendering -->
-    <canvas id="gamepadCanvas" width="200" height="100"></canvas>
 
 
     <script src="./index.ts"></script>

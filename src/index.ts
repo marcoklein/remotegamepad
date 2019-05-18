@@ -5,21 +5,25 @@ import { Pad } from './Pad';
 let fullscreenPlugin: Screenfull = <Screenfull> screenfull;
 
 
-let gamepadCanvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById('gamepadCanvas');
-let ctx = gamepadCanvas.getContext('2d');
+let canvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById('gamepadCanvas');
+let ctx = canvas.getContext('2d');
 
 let connectionManager: ConnectionManager = new ConnectionManager();
 
 
 let pad = new Pad();
+pad.attachListeners(canvas);
 /**
  * Draw current state.
  */
-function draw() {
+function renderLoop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
     ctx.arc(95, 50, 40, 0, 2 * Math.PI);
     ctx.stroke();
     pad.draw(ctx);
+    
+    window.requestAnimationFrame(renderLoop);
 }
 
 /**
@@ -55,15 +59,16 @@ function initialize() {
     // init resize behavior
     window.addEventListener('resize', resizeCanvas, false);
     resizeCanvas();
+    // start draw loop
+    window.requestAnimationFrame(renderLoop);
 }
 
 /**
  * Resize canvas to fit window and redraw.
  */
 function resizeCanvas() {
-    gamepadCanvas.width = window.innerWidth;
-    gamepadCanvas.height = window.innerHeight;
-    draw();
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 }
 
 (() => {
