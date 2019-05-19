@@ -173,4 +173,36 @@ export class Vector {
         return this;
     }
 
+    /**
+     * Scales this vector with given scalar.
+     * 
+     * @param scalar Scale multiplicator.
+     * @returns This vector. 
+     */
+    scale(scalar: number) {
+        this.x *= scalar;
+        this.y *= scalar;
+        return this;
+    }
+
+    /**
+     * Return this vector normalized.
+     * 
+     * @returns This vector.
+     */
+    normalize(): Vector {
+        let length = this.length();
+        if (length === 1 || length === 0) {
+            // already normalized
+            return this;
+        }
+
+        length = 1.0 / length;
+
+        this.x *= length;
+        this.y *= length;
+
+        return this;
+    }
+
 }

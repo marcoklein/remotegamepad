@@ -5,9 +5,9 @@ import { Vector } from "./Vector";
  * Adds a pad to the screen.
  */
 export class Pad {
-    origin: Vector = new Vector(300, 300);
-    radius: number = 50;
-    moveRadius: number = 200;
+    padOrigin: Vector = new Vector(300, 300);
+    padRadius: number = 50;
+    moveRadius: number = 100;
     mousePos: Vector = new Vector();
     mouseActive: boolean = false;
     /**
@@ -76,17 +76,24 @@ export class Pad {
         let padImage = <HTMLImageElement> document.getElementById('padDarkImage');
         let padBackgroundImage = <HTMLImageElement> document.getElementById('padBackgroundDarkImage');
 
-        ctx.drawImage(padBackgroundImage, this.origin.x - padBackgroundImage.width / 2, this.origin.y - padBackgroundImage.height / 2);
+        ctx.drawImage(padBackgroundImage, this.padOrigin.x - padBackgroundImage.width / 2, this.padOrigin.y - padBackgroundImage.height / 2);
 
         // calculate target position of image
         if (!this.mousePos) {
             // draw at original position if no touch event is provided
-            ctx.drawImage(padImage, this.origin.x - padImage.width / 2, this.origin.y - padImage.height / 2);
+            ctx.drawImage(padImage, this.padOrigin.x - padImage.width / 2, this.padOrigin.y - padImage.height / 2);
         } else {
             // move pad in direction of mouse, but max at border of move radius
-            let targetX = this.mousePos.x;
-            let targetY = this.mousePos.y;
-            ctx.drawImage(padImage, targetX- padImage.width / 2, targetY - padImage.height / 2);
+            // check if mouse is inside move radius
+            let targetVec: Vector;
+            if (this.mousePos.copy().sub(this.padOrigin).lengthSquared() < (this.moveRadius - this.padRadius) * (this.moveRadius - this.padRadius)) {
+                // mouse inside move area
+                targetVec = new Vector(this.mousePos.x, this.mousePos.y);
+            } else {
+                // if not, move max to move radius...
+                targetVec = this.mousePos.copy().sub(this.padOrigin).normalize().scale(this.moveRadius - this.padRadius).add(this.padOrigin);
+            }
+            ctx.drawImage(padImage, targetVec.x - padImage.width / 2, targetVec.y - padImage.height / 2);
         }
     }
 }
