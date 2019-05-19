@@ -26,7 +26,7 @@ peer.on('connection', (conn) => {
             console.log('received pong');
             let ping = Date.now() - pingStart;
             console.log('ping: ' + ping);
-            conn.send('ping ' + ping);
+            conn.send({t: 'ping', v: ping});
         }
     });
     console.log('Another peer connected!', conn.peer);

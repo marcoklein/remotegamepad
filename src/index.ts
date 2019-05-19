@@ -1,6 +1,6 @@
 import $ from 'jquery';
-import { ConnectionManager } from './ConnectionManager';
-import screenfull, {Screenfull} from 'screenfull';
+import screenfull, { Screenfull } from 'screenfull';
+import { ConnectionManager, ConnectionListener } from './ConnectionManager';
 import { Pad } from './Pad';
 let fullscreenPlugin: Screenfull = <Screenfull> screenfull;
 
@@ -9,6 +9,18 @@ let canvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById('gam
 let ctx = canvas.getContext('2d');
 
 let connectionManager: ConnectionManager = new ConnectionManager();
+connectionManager.addListener(<ConnectionListener> {
+    connectionEstablished(): void {
+
+    },
+    connectionLost(): void {
+
+    },
+    connectionMessageUpdate(msg: string): void {
+        console.log('changed msg: ' + msg);
+        $('#connectionMessage').text(msg);
+    }
+});
 
 
 let pad = new Pad();
@@ -17,10 +29,12 @@ pad.attachListeners(canvas);
  * Draw current state.
  */
 function renderLoop() {
+    // clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.beginPath();
-    ctx.arc(95, 50, 40, 0, 2 * Math.PI);
-    ctx.stroke();
+    // draw last ping
+    ctx.font = '30px Arial';
+    ctx.fillText('Ping: ' + connectionManager.lastPing, canvas.width * 0.5, canvas.height * 0.05)
+    // draw game pad
     pad.draw(ctx);
     
     window.requestAnimationFrame(renderLoop);
@@ -53,8 +67,13 @@ function initialize() {
         }
     });
 
-    // later provide id
-    //connectionManager.connect('CATCHME2');
+    /*$('#connectButton').on('click', () => {
+        let connectionCode = <string> $('#connectionCodeInput').val();
+        console.log('Attempting connection with code ' + connectionCode);
+        connectionManager.connect(connectionCode);
+    });*/
+    connectionManager.connect('CATCHME2');
+
 
     // init resize behavior
     window.addEventListener('resize', resizeCanvas, false);

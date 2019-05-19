@@ -21,6 +21,15 @@
 
 <body> <!-- TODO initially hide body and show if loaded-->
 
+    <!-- Modals -->
+    <div class="overlay" id="connectionPanel">
+        <h2>Connect to a Server</h2>
+        <input id="connectionCodeInput" type="text" placeholder="Connection Code" value="CATCHME2">
+        <button id="connectButton">Connect</button>
+        <p id="connectionMessage"></p>
+    </div>
+
+
     <!-- Canvas for rendering -->
     <canvas id="gamepadCanvas" width="200" height="100"></canvas>
 

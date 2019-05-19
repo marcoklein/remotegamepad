@@ -26,3 +26,23 @@ html, body {
     right: 20%;
     bottom: 10%;
 }
+
+/* For modals */
+#connectionPanel {
+    display: none; /* Disabled till further development */
+    border-color: black;
+    background-color: lightgray;
+    min-width: 400px;
+    min-height: 300px;
+    width: 50%;
+    height: 50%;
+    left: 25%;
+    top: 25%;
+    text-align: center;
+}
+#connectButton {
+    /*margin-top: 2em;*/
+}
+#connectionMessage {
+    color: red;
+}
