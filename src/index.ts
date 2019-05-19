@@ -33,11 +33,14 @@ function renderLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     // draw last ping
     ctx.font = '30px Arial';
-    ctx.fillText('Ping: ' + connectionManager.lastPing, canvas.width * 0.5, canvas.height * 0.05)
+    ctx.fillText('Peer Ping: ' + connectionManager.lastMeasuredPeerPing, canvas.width * 0.5, canvas.height * 0.05)
+    ctx.fillText('Ping: ' + connectionManager.lastPing, canvas.width * 0.5, canvas.height * 0.1)
     // draw game pad
     pad.draw(ctx);
     
-    window.requestAnimationFrame(renderLoop);
+    setTimeout(() => {
+        window.requestAnimationFrame(renderLoop);
+    }, 100);
 }
 
 /**

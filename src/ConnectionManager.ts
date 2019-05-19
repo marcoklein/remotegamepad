@@ -18,6 +18,7 @@ export class ConnectionManager {
     peer: Peer;
     connection: DataConnection;
     listeners: ConnectionListener[] = [];
+    lastMeasuredPeerPing: number;
     lastPing: number;
 
     constructor() {
@@ -71,20 +72,38 @@ export class ConnectionManager {
         this.connection.on('open', () => {
             this.notifyConnectionMessageUpdate('Connection successfull!');
             console.log('connection successfull');
+            console.log('buffer size: ' + this.connection.bufferSize);
+            // measure latency by sending ping requests
+            let pingStart: number;
+            let measurePing = () => {
+                // send ping
+                pingStart = Date.now();
+                this.connection.send('ping');
+                setTimeout(() => {
+                    // ping every second
+                    measurePing();
+                }, 1000);
+            }
+
+            // listen for incoming data
             this.connection.on('data', (data) => {
                 console.log('received data: ', data);
                 if (data === 'ping') {
                     this.connection.send('pong');
+                } else if (data === 'pong') {
+                    // received pong
+                    this.lastPing = Date.now() - pingStart;
                 } else if (typeof data === 'object') {
                     data = <{t: any, v: any}> data;
                     if (data.t === 'ping') {
                         // received last ping value
-                        this.lastPing = data.v;
+                        this.lastMeasuredPeerPing = data.v;
                     }
                 }
                 
             });
-            this.connection.send('hellooo');
+
+            measurePing();
         });
         this.connection.on('close', () => {
             console.log('Connection closed');
