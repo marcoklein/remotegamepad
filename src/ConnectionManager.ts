@@ -82,7 +82,7 @@ export class ConnectionManager {
                 setTimeout(() => {
                     // ping every second
                     measurePing();
-                }, 1000);
+                }, 70);
             }
 
             // listen for incoming data

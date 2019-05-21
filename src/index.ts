@@ -2,6 +2,7 @@ import $ from 'jquery';
 import screenfull, { Screenfull } from 'screenfull';
 import { ConnectionManager, ConnectionListener } from './ConnectionManager';
 import { Pad } from './Pad';
+import { Button } from './Button';
 let fullscreenPlugin: Screenfull = <Screenfull> screenfull;
 
 
@@ -25,6 +26,10 @@ connectionManager.addListener(<ConnectionListener> {
 
 let pad = new Pad();
 pad.attachListeners(canvas);
+
+let buttonA = new Button(canvas);
+buttonA.position.set(50, 50);
+
 /**
  * Draw current state.
  */
@@ -37,6 +42,7 @@ function renderLoop() {
     ctx.fillText('Ping: ' + connectionManager.lastPing, canvas.width * 0.5, canvas.height * 0.1)
     // draw game pad
     pad.draw(ctx);
+    buttonA.draw(ctx);
     
     setTimeout(() => {
         window.requestAnimationFrame(renderLoop);

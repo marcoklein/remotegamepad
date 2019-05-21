@@ -51,7 +51,7 @@ export class Pad {
 
     
     private touchStartEvent(event: TouchEvent) {
-        event.preventDefault();
+        //event.preventDefault();
         this.mousePos.set(
             event.targetTouches[0].pageX,
             event.targetTouches[0].pageY,
@@ -59,7 +59,7 @@ export class Pad {
     }
 
     private touchMoveEvent(event: TouchEvent) {
-        event.preventDefault();
+        //event.preventDefault();
         this.mousePos.set(
             event.targetTouches[0].pageX,
             event.targetTouches[0].pageY,
