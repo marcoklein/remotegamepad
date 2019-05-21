@@ -1,7 +1,7 @@
 import Peer, { DataConnection } from 'peerjs';
 
 console.log('Creating new peer.');
-let peer = new Peer('CATCHME2');
+let peer = new Peer('CATCHME2TFT');
 
 peer.on('open', (id) => {
     console.log('Peer ready with id: ', id);

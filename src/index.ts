@@ -81,7 +81,7 @@ function initialize() {
         console.log('Attempting connection with code ' + connectionCode);
         connectionManager.connect(connectionCode);
     });*/
-    connectionManager.connect('CATCHME2');
+    connectionManager.connect('CATCHME2TFT');
 
 
     // init resize behavior
