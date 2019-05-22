@@ -6,7 +6,7 @@ import { UIElement } from "./UIElement";
  * Adds a pad to the screen.
  */
 export class Pad extends UIElement {
-    padOrigin: Vector = new Vector(300, 300);
+    position: Vector = new Vector(300, 300);
     padRadius: number = 50;
     moveRadius: number = 100;
     mousePos: Vector = new Vector();
@@ -19,8 +19,11 @@ export class Pad extends UIElement {
 
     onPointerDown(x: number, y: number, identifier: number): void {
         this.mousePos.set(x, y);
-        this.mouseActive = true;
-        this.pointerIdentifier = identifier;
+        // first touch has to be inside movement radius
+        if (new Vector(x, y).sub(this.position).lengthSquared() < this.moveRadius * this.moveRadius) {
+            this.mouseActive = true;
+            this.pointerIdentifier = identifier;
+        }
     }
     onPointerMove(x: number, y: number, identifier: number): void {
         if (this.pointerIdentifier === identifier) {
@@ -42,22 +45,22 @@ export class Pad extends UIElement {
         let padImage = <HTMLImageElement> document.getElementById('padDarkImage');
         let padBackgroundImage = <HTMLImageElement> document.getElementById('padBackgroundDarkImage');
 
-        ctx.drawImage(padBackgroundImage, this.padOrigin.x - padBackgroundImage.width / 2, this.padOrigin.y - padBackgroundImage.height / 2);
+        ctx.drawImage(padBackgroundImage, this.position.x - padBackgroundImage.width / 2, this.position.y - padBackgroundImage.height / 2);
 
         // calculate target position of image
         if (!this.mouseActive) {
             // draw at original position if no touch event is provided
-            ctx.drawImage(padImage, this.padOrigin.x - padImage.width / 2, this.padOrigin.y - padImage.height / 2);
+            ctx.drawImage(padImage, this.position.x - padImage.width / 2, this.position.y - padImage.height / 2);
         } else {
             // move pad in direction of mouse, but max at border of move radius
             // check if mouse is inside move radius
             let targetVec: Vector;
-            if (this.mousePos.copy().sub(this.padOrigin).lengthSquared() < (this.moveRadius - this.padRadius) * (this.moveRadius - this.padRadius)) {
+            if (this.mousePos.copy().sub(this.position).lengthSquared() < (this.moveRadius - this.padRadius) * (this.moveRadius - this.padRadius)) {
                 // mouse inside move area
                 targetVec = new Vector(this.mousePos.x, this.mousePos.y);
             } else {
                 // if not, move max to move radius...
-                targetVec = this.mousePos.copy().sub(this.padOrigin).normalize().scale(this.moveRadius - this.padRadius).add(this.padOrigin);
+                targetVec = this.mousePos.copy().sub(this.position).normalize().scale(this.moveRadius - this.padRadius).add(this.position);
             }
             ctx.drawImage(padImage, targetVec.x - padImage.width / 2, targetVec.y - padImage.height / 2);
         }

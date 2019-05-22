@@ -43,7 +43,7 @@ export class Application {
     private initUserInterface() {
         // add pad
         let pad = new Pad();
-        pad.padOrigin.set(200, 200);
+        pad.position.set(200, 200);
         this.addUiElement(pad);
         // add button
     }
@@ -73,7 +73,6 @@ export class Application {
             }
         }, false);
         canvas.addEventListener('touchend', (event) => {
-            console.log('touch end');
             console.log(event);
             for (let i = 0; i < event.changedTouches.length; i++) {
                 let touch = event.changedTouches[i];
@@ -81,7 +80,6 @@ export class Application {
             }
         }, false);
         canvas.addEventListener('touchcancel', (event) => {
-            console.log('touch cancel');
             for (let i = 0; i < event.changedTouches.length; i++) {
                 let touch = event.changedTouches[i];
                 this.handlePointerUp(touch.identifier);
