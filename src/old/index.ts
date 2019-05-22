@@ -1,8 +1,8 @@
 import $ from 'jquery';
 import screenfull, { Screenfull } from 'screenfull';
-import { ConnectionManager, ConnectionListener } from './ConnectionManager';
+import { ConnectionManager, ConnectionListener } from '../ui/ConnectionManager';
 import { Pad } from './Pad';
-import { Button } from './Button';
+import { Button } from '../ui/Button';
 let fullscreenPlugin: Screenfull = <Screenfull> screenfull;
 
 
