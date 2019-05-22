@@ -4,13 +4,16 @@
  * For instance, game pad and buttons.
  */
 export abstract class UIElement {
+
+
+
     /**
      * Draw element using given canvas context.
      * 
      * @param ctx Canvas rendering context.
      */
     abstract draw(ctx: CanvasRenderingContext2D): void;
-
+    
     /**
      * Handles touch or mouse events.
      * 

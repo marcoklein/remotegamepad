@@ -1,5 +1,6 @@
 import { UIElement } from "./ui/UIElement";
 import { Pad } from "./ui/Pad";
+import { Button } from "./ui/Button";
 
 export class Application {
     canvas: HTMLCanvasElement;
@@ -46,6 +47,9 @@ export class Application {
         pad.position.set(200, 200);
         this.addUiElement(pad);
         // add button
+        let buttonA = new Button();
+        buttonA.position.set(200, 200);
+        this.addUiElement(buttonA);
     }
 
     private attachEventListeners(canvas: HTMLCanvasElement) {

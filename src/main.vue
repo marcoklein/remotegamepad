@@ -4,6 +4,7 @@ div
     // Loaded images for canvas
     img#padDarkImage(src='assets/padDark.png')
     img#padBackgroundDarkImage(src='assets/padBackgroundDark.png')
+    img#buttonAImage(src='assets/buttonA.png')
   // canvas for rendering
   canvas#gamepadCanvas
 </template>
