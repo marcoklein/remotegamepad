@@ -73,14 +73,17 @@ export class Application {
             }
         }, false);
         canvas.addEventListener('touchend', (event) => {
-            for (let i = 0; i < event.targetTouches.length; i++) {
-                let touch = event.targetTouches[i];
+            console.log('touch end');
+            console.log(event);
+            for (let i = 0; i < event.changedTouches.length; i++) {
+                let touch = event.changedTouches[i];
                 this.handlePointerUp(touch.identifier);
             }
         }, false);
         canvas.addEventListener('touchcancel', (event) => {
-            for (let i = 0; i < event.targetTouches.length; i++) {
-                let touch = event.targetTouches[i];
+            console.log('touch cancel');
+            for (let i = 0; i < event.changedTouches.length; i++) {
+                let touch = event.changedTouches[i];
                 this.handlePointerUp(touch.identifier);
             }
         }, false);
