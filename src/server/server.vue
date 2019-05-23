@@ -1,7 +1,12 @@
 <template lang="pug">
 div
-  h1 Test Server of Smartphone Gamepad library
-  button.btn.btn-primary(type='button') Start
+  b-container
+    h1 Test Server of Smartphone Gamepad library
+    b-button(variant='primary') Start
+
+    b-list-group
+      b-list-group-item Client A
+      b-list-group-item Client B
 </template>
 
 
