@@ -77,7 +77,6 @@ export class Application {
             }
         }, false);
         canvas.addEventListener('touchend', (event) => {
-            console.log(event);
             for (let i = 0; i < event.changedTouches.length; i++) {
                 let touch = event.changedTouches[i];
                 this.handlePointerUp(touch.identifier);
