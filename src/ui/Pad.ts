@@ -17,6 +17,7 @@ export class Pad extends UIElement {
 
 
     onPointerDown(x: number, y: number, identifier: number): void {
+        console.log('pointer down', identifier);
         // first touch has to be inside movement radius
         if (new Vector(x, y).sub(this.positionAbsolute).lengthSquared() < this.moveRadius * this.moveRadius) {
             this.mousePos.set(x, y);
@@ -25,6 +26,7 @@ export class Pad extends UIElement {
         }
     }
     onPointerMove(x: number, y: number, identifier: number): void {
+        console.log('pointer move', identifier);
         if (this.pointerIdentifier === identifier) {
             // only update position for same pointer
             this.mousePos.set(x, y);

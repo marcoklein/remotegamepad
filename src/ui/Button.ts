@@ -5,8 +5,6 @@ import { UIElement } from "./UIElement";
  * Button for HTML5 canvas.
  */
 export class Button extends UIElement {
-    position: Vector = new Vector();
-
     image: HTMLImageElement;
 
     constructor() {
@@ -19,7 +17,7 @@ export class Button extends UIElement {
         // test if position hits button
         let radius = this.image.width > this.image.height ? this.image.width : this.image.height;
         radius *= radius; // we compare length squared
-        if (new Vector(x, y).sub(this.position).lengthSquared() < radius) {
+        if (new Vector(x, y).sub(this.positionAbsolute).lengthSquared() < radius) {
             // clicked
             console.log('button clicked');
         }
@@ -33,7 +31,7 @@ export class Button extends UIElement {
 
 
     draw(ctx: CanvasRenderingContext2D) {
-        let drawPosition = this.position.copy();
+        let drawPosition = this.positionAbsolute.copy();
         //drawPosition.x = ctx.canvas.width - drawPosition.x;
         //drawPosition.y = ctx.canvas.height - drawPosition.y;
         ctx.drawImage(

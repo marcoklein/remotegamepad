@@ -48,7 +48,7 @@ export class Application {
         this.addUiElement(pad);
         // add button
         let buttonA = new Button();
-        buttonA.position.set(200, 200);
+        buttonA.positionRelative.set(0.8, 0.7);
         this.addUiElement(buttonA);
     }
 
@@ -73,7 +73,7 @@ export class Application {
         canvas.addEventListener('touchmove', (event) => {
             for (let i = 0; i < event.targetTouches.length; i++) {
                 let touch = event.targetTouches[i];
-                this.handlePointerDown(touch.pageX, touch.pageY, touch.identifier);
+                this.handlePointerMove(touch.pageX, touch.pageY, touch.identifier);
             }
         }, false);
         canvas.addEventListener('touchend', (event) => {
