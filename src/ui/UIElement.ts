@@ -1,11 +1,31 @@
+import { Vector } from "./Vector";
 
 /**
  * Base class for user interface elements.
  * For instance, game pad and buttons.
+ * 
+ * All elements have relative positions within the view.
  */
 export abstract class UIElement {
 
+    /**
+     * Local, absolute position within parent.
+     */
+    private _positionAbsolute: Vector = new Vector();
 
+    /**
+     * Local, relative positioning within parent.
+     */
+    private _positionRelative: Vector = new Vector();
+
+
+    get positionAbsolute(): Vector {
+        return this._positionAbsolute;
+    }
+
+    get positionRelative(): Vector {
+        return this._positionRelative;
+    }
 
     /**
      * Draw element using given canvas context.
@@ -14,6 +34,18 @@ export abstract class UIElement {
      */
     abstract draw(ctx: CanvasRenderingContext2D): void;
     
+    /**
+     * Parent size changed. Adjust relative positioning.
+     * 
+     * @param width 
+     * @param height 
+     */
+    onParentResize(width: number, height: number) {
+        // calculate absolute position
+        this._positionAbsolute.x = width * this._positionRelative.x;
+        this._positionAbsolute.y = height * this._positionRelative.y;
+    }
+
     /**
      * Handles touch or mouse events.
      * 

@@ -6,7 +6,6 @@ import { UIElement } from "./UIElement";
  * Adds a pad to the screen.
  */
 export class Pad extends UIElement {
-    position: Vector = new Vector(300, 300);
     padRadius: number = 50;
     moveRadius: number = 100;
     mousePos: Vector = new Vector();
@@ -18,9 +17,9 @@ export class Pad extends UIElement {
 
 
     onPointerDown(x: number, y: number, identifier: number): void {
-        this.mousePos.set(x, y);
         // first touch has to be inside movement radius
-        if (new Vector(x, y).sub(this.position).lengthSquared() < this.moveRadius * this.moveRadius) {
+        if (new Vector(x, y).sub(this.positionAbsolute).lengthSquared() < this.moveRadius * this.moveRadius) {
+            this.mousePos.set(x, y);
             this.mouseActive = true;
             this.pointerIdentifier = identifier;
         }
@@ -32,7 +31,11 @@ export class Pad extends UIElement {
         }
     }
     onPointerUp(identifier: number): void {
-        this.mouseActive = false;
+        // stop pad movement
+        if (this.pointerIdentifier === identifier) {
+            this.pointerIdentifier = null;
+            this.mouseActive = false;
+        }
     }
 
     /**
@@ -45,8 +48,8 @@ export class Pad extends UIElement {
         let padImage = <HTMLImageElement> document.getElementById('padDarkImage');
         let padBackgroundImage = <HTMLImageElement> document.getElementById('padBackgroundDarkImage');
 
-        let drawPosition = this.position.copy();
-        drawPosition.y = ctx.canvas.height - drawPosition.y;
+        let drawPosition = this.positionAbsolute.copy();
+        //drawPosition.y = ctx.canvas.height - drawPosition.y;
 
         ctx.drawImage(
             padBackgroundImage,

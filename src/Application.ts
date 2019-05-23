@@ -44,7 +44,7 @@ export class Application {
     private initUserInterface() {
         // add pad
         let pad = new Pad();
-        pad.position.set(200, 200);
+        pad.positionRelative.set(0.2, 0.8);
         this.addUiElement(pad);
         // add button
         let buttonA = new Button();
@@ -152,6 +152,7 @@ export class Application {
         if (!this.uiElements) {
             this.uiElements = [];
         }
+        element.onParentResize(this.canvas.width, this.canvas.height);
         this.uiElements.push(element);
     }
 
@@ -180,5 +181,13 @@ export class Application {
     private resizeCanvas() {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
+
+        if (this.uiElements) {
+            this.uiElements.forEach((element) => {
+                if (element.onParentResize) {
+                    element.onParentResize(this.canvas.width, this.canvas.height);
+                }
+            });
+        }
     }
 }
