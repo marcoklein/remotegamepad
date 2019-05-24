@@ -2,6 +2,7 @@
 import Peer, { DataConnection } from 'peerjs';
 import { listeners } from 'cluster';
 import { PRE_ID, Message } from './globals';
+import { AbstractPeerConnection } from './ConnectionProxy';
 
 
 /**
@@ -18,37 +19,16 @@ export interface ConnectionListener {
 /**
  * Base class on client side to handle a server connection.
  */
-export class SmartPadClient {
+export class SmartPadClient extends AbstractPeerConnection {
+
     /**
      * Underlying peerjs connection.
      */
     protected peer: Peer;
-    protected connection: DataConnection;
-    /**
-     * All sent messages get a unique id (counter).
-     */
-    protected lastMessageId: number = 0;
     listeners: ConnectionListener[] = [];
 
     private _isConnecting: boolean;
 
-    /**
-     * WebRTC connections are unreliable if data is sent sporadic.
-     * Therefore, the client sends keep alive messages in short intervals to esnure a stable connection.
-     */
-    private _sendKeepAlive: boolean = true;
-    private keepAliveTimeout: any;
-    /**
-     * Keep alive interval in milliseconds.
-     */
-    private keepAliveInterval: number = 70;
-
-
-    lastMeasuredPeerPing: number;
-    lastPing: number;
-
-    constructor() {
-    }
 
     /**
      * Connects to a server using given connection code.
@@ -91,49 +71,6 @@ export class SmartPadClient {
         });
     }
 
-    sendMessage(type: string, data?: any, reliable?: boolean): number;
-    /**
-     * Sends given message and returns id.
-     * 
-     * @param message 
-     * @param reliable
-     */
-    sendMessage(message: Message, reliable?: boolean): number;
-    sendMessage(message: Message | string, reliable: boolean | any, p3?: boolean): number {
-        console.log('sendMessage p1 type', typeof message);
-        if (typeof message === 'string') {
-            // first overload
-            message = {
-                type: message,
-                data: reliable
-            };
-            reliable = p3;
-        }
-        // for second overload nothing changes
-
-        // assign message id
-        message.id = this.lastMessageId++;
-        // send reliably, if set within message or parameter
-        if (reliable || message.reliable) {
-            message.reliable = reliable = true;
-            this.sendMessageReliably(message);
-        } else {
-            // send through peer connection
-            this.connection.send(message);
-        }
-        return message.id;
-    }
-
-    /**
-     * Internal helper to track reliable messages and ensure delivery.
-     * 
-     * @param message 
-     */
-    private sendMessageReliably(message: Message) {
-        // TODO implement reliable transfere
-        this.connection.send(message);
-    }
-
     /**
      * Called as the client freshly connects to the server.
      * Sets up event listeners.
@@ -142,47 +79,11 @@ export class SmartPadClient {
         // peer listeners
         this.peer.on('error', this.onPeerError);
         this.peer.on('close', this.onPeerClose);
-        // connection listeners
-        this.connection.on('data', this.onConnectionData);
-        this.connection.on('close', this.onConnectionClose);
-        this.connection.on('error', this.onConnectionError);
         
         // start keep alive process
-        if (this._sendKeepAlive) {
+        if (this.sendKeepAlive) {
             this.turnOnKeepAlive();
         }
-    }
-
-    /**
-     * WebRTC connections are unreliable if data is sent sporadic.
-     * Therefore, the client sends keep alive messages in short intervals to esnure a stable connection.
-     */
-    turnOnKeepAlive() {
-        this._sendKeepAlive = true;
-        this.sendKeepAliveMessage();
-    }
-
-    /**
-     * WebRTC connections are unreliable if data is sent sporadic.
-     * Therefore, the client sends keep alive messages in short intervals to esnure a stable connection.
-     */
-    turnOffKeepAlive() {
-        this._sendKeepAlive = false;
-        clearTimeout(this.keepAliveTimeout);
-    }
-
-
-    /**
-     * Send keep alives with ping messages.
-     */
-    private sendKeepAliveMessage() {
-        // send ping message
-        this.sendMessage('ping');
-
-        // schedule next keep alive message
-        this.keepAliveTimeout = setTimeout(() => {
-            this.sendKeepAliveMessage();
-        }, this.keepAliveInterval);
     }
 
     /*
@@ -222,16 +123,11 @@ export class SmartPadClient {
     
     /* Callbacks */
 
-    private onConnectionData = (data: any) => {
-
+    protected onMessage(msg: Message): void {
     }
-
-    private onConnectionClose = () => {
-
+    protected onConnectionClose(): void {
     }
-
-    private onConnectionError = (err: any) => {
-
+    protected onConnectionError(err: any): void {
     }
 
     private onPeerClose = () => {
@@ -252,12 +148,5 @@ export class SmartPadClient {
         return this._isConnecting;
     }
     
-    /**
-     * WebRTC connections are unreliable if data is sent sporadic.
-     * Therefore, the client sends keep alive messages in short intervals to esnure a stable connection.
-     */
-    get sendKeepAlive(): boolean {
-        return this._sendKeepAlive
-    }
 
 }
