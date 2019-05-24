@@ -60,7 +60,7 @@ export class SmartPadClient {
             // listen for open
             let onConnectionOpen = () => {
                 removeTemporaryEventListeners();
-                this.initConnectedClient();
+                this.initConnectedPeer();
                 resolve(this);
             }
             // listen for error
@@ -80,31 +80,17 @@ export class SmartPadClient {
      * Called as the client freshly connects to the server.
      * Sets up event listeners.
      */
-    private initConnectedClient() {
-        console.log('connection!');
+    private initConnectedPeer() {
+        // peer listeners
+        this.peer.on('error', this.onPeerError);
+        this.peer.on('close', this.onPeerClose);
+        // connection listeners
+        this.connection.on('data', this.onConnectionData);
+        this.connection.on('close', this.onConnectionClose);
+        this.connection.on('error', this.onConnectionError);
     }
 
-    
-    oldconnect(connectionId: string) {
-        // initiate peer connection
-        this.connection = this.peer.connect(connectionId);
-
-        this.peer.on('connection', (data) => {
-            console.log('peer on connection');
-        });
-        this.peer.on('open', (id) => {
-            console.log('peer open, id: ', id);
-            this.notifyConnectionMessageUpdate('Peer open. Ready to connect.');
-        });
-        this.peer.on('error', (err) => {
-            console.error('error: ', err);
-            this.notifyConnectionLost();
-            this.notifyConnectionMessageUpdate('Connection lost due to peer error.');
-        });
-        this.connection.on('open', () => {
-            this.notifyConnectionMessageUpdate('Connection successfull!');
-            console.log('connection successfull');
-            console.log('buffer size: ' + this.connection.bufferSize);
+    /*
             // measure latency by sending ping requests
             let pingStart: number;
             let measurePing = () => {
@@ -136,43 +122,29 @@ export class SmartPadClient {
             });
 
             measurePing();
-        });
-        this.connection.on('close', () => {
-            console.log('Connection closed');
-            this.notifyConnectionLost();
-        });
-        this.connection.on('error', (err) => {
-            console.error('Connection error');
-            this.notifyConnectionLost();
-        });
-    }
+    */
 
-    addListener(connListener: ConnectionListener) {
-        this.listeners.push(connListener);
-    }
-
-    private notifyConnectionEstablished() {
-        this.listeners.forEach((listener) => {
-            if (listener.connectionEstablished) {
-                listener.connectionEstablished();
-            }
-        });
-    }
     
-    private notifyConnectionLost() {
-        this.listeners.forEach((listener) => {
-            if (listener.connectionLost) {
-                listener.connectionLost();
-            }
-        });
+    /* Callbacks */
+
+    private onConnectionData = (data: any) => {
+
     }
 
-    private notifyConnectionMessageUpdate(msg: string) {
-        this.listeners.forEach((listener) => {
-            if (listener.connectionMessageUpdate) {
-                listener.connectionMessageUpdate(msg);
-            }
-        });
+    private onConnectionClose = () => {
+
+    }
+
+    private onConnectionError = (err: any) => {
+
+    }
+
+    private onPeerClose = () => {
+
+    }
+
+    private onPeerError = (err: any) => {
+
     }
 
     /* Getter and Setter */
