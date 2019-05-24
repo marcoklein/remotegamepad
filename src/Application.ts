@@ -1,7 +1,7 @@
 import { UIElement } from "./ui/UIElement";
 import { Pad } from "./ui/Pad";
 import { Button } from "./ui/Button";
-import { ConnectionManager } from './ConnectionManager';
+import { SmartPadClient } from './SmartPadClient';
 import { PRE_ID } from "./globals";
 
 export class Application {
@@ -15,6 +15,8 @@ export class Application {
      * All contained user interface elements.
      */
     uiElements: UIElement[];
+
+    network: SmartPadClient;
 
     /**
      * Initiates a new application with given HTML5 canvas for rendering.
@@ -39,8 +41,8 @@ export class Application {
         this.resizeCanvas();
         window.requestAnimationFrame(() => this.renderLoop());
 
-        let connectionManager = new ConnectionManager();
-        connectionManager.connect(PRE_ID + 'result');
+        this.network = new SmartPadClient();
+        this.network.connect('result');
     }
 
     /**
