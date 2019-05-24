@@ -1,9 +1,11 @@
 <template lang="pug">
 div
   b-container
-    h1 Test Server of Smartphone Gamepad library
-    b-button(variant='primary') Start
+    h3 Test Server of Smartphone Gamepad library
+    div Connection Code: {{ connectionCode }}
 
+    hr
+    h3 Clients
     b-list-group
       b-list-group-item Client A
       b-list-group-item Client B
@@ -21,7 +23,19 @@ export default class TestServerApp extends Vue {
     mounted() {
         // initialize
         this.server = new SmartPadServer();
+        this.server.start().then((id) => {
+            console.log('server opened with id ', id);
+            this.$data.connectionCode = this.server.connectionCode;
+        });
     }
+
+    data() {
+        return {
+            connectionCode: '... connecting ...'
+        };
+    }
+
+    
 
 }
 </script>

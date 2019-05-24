@@ -1,5 +1,6 @@
 <template lang="pug">
 div
+  Overlay.overlay
   #images(style='display: none')
     // Loaded images for canvas
     img#padDarkImage(src='assets/padDark.png')
@@ -13,7 +14,11 @@ div
 <script lang="ts">
 import Vue from 'vue'
 import { Application } from './Application';
+import Overlay from './Overlay.vue';
 export default Vue.extend({
+    components: {
+        Overlay
+    },
     mounted: () => {
         // initialize
         let canvas = <HTMLCanvasElement> document.getElementById('gamepadCanvas');
@@ -40,5 +45,8 @@ html, body {
 
     /* Enable floating fullscreenButton */
     position: relative;
+}
+.overlay {
+    position: absolute;
 }
 </style>
