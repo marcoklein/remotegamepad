@@ -56,6 +56,8 @@ export class SmartPadServer {
                         if (numberOfTries >= numberOfRetries) {
                             // return with an error
                             this.startingServer = false;
+                            this.peer.destroy();
+                            this.peer = null;
                             reject(error);
                             return;
                         }

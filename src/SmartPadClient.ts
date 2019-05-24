@@ -42,7 +42,7 @@ export class SmartPadClient {
      * @param connectionCode 
      */
     connect(connectionCode: string): Promise<SmartPadClient> {
-        if (this._isConnecting) {
+        if (this._isConnecting || this.peer) {
             console.warn('Connection attempt during ongoing connection.');
             return;
         }
@@ -65,8 +65,9 @@ export class SmartPadClient {
             }
             // listen for error
             let onPeerError = (err: any) => {
-                console.error('peer error');
                 removeTemporaryEventListeners();
+                this.peer.destroy();
+                this.peer = null;
                 reject(err);
             }
             // listen to open and error event of connect
