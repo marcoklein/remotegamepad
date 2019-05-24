@@ -8,5 +8,5 @@ export type Message = {
     id?: number;
     reliable?: boolean;
     type: string;
-    data: any;
+    data?: any;
 }
