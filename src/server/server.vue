@@ -23,7 +23,7 @@ export default class TestServerApp extends Vue {
     mounted() {
         // initialize
         this.server = new SmartPadServer();
-        this.server.start().then((id) => {
+        this.server.start('result').then((id) => {
             // provide connection code and clients to front end
             this.$data.connectionCode = this.server.connectionCode;
             this.$data.clients = this.server.clients;

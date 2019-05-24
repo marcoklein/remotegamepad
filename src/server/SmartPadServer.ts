@@ -32,7 +32,7 @@ export class SmartPadServer {
     /**
      * Inits server by generating a connection code and setting up listeners.
      */
-    start(numberOfRetries: number = 10): Promise<string> {
+    start(connectionCode?: string, numberOfRetries: number = 10): Promise<string> {
         if (this.startingServer || this.peer) {
             throw new Error('Server can not start twice. Call stop() if started.');
         }
@@ -43,7 +43,7 @@ export class SmartPadServer {
         return new Promise((resolve, reject) => {
             let numberOfTries = 0;
             let establishConnection = () => {
-                let code = this.generateRandomConnectionCode();
+                let code = connectionCode || this.generateRandomConnectionCode();
                 this.openPeerWithId(code, (error) => {
                     if (!error) {
                         // release starting lock
@@ -111,7 +111,7 @@ export class SmartPadServer {
         for (let i = 0; i < numberOfCharacters; i++) {
             result += characters.charAt(Math.floor(Math.random() * characters.length));
         }
-        return 'result';
+        return result;
     }
 
     /**
