@@ -1,7 +1,7 @@
 
 import Peer, { DataConnection } from 'peerjs';
 import { listeners } from 'cluster';
-import { PRE_ID } from './globals';
+import { PRE_ID, Message } from './globals';
 
 
 /**
@@ -24,6 +24,10 @@ export class SmartPadClient {
      */
     protected peer: Peer;
     protected connection: DataConnection;
+    /**
+     * All sent messages get a unique id (counter).
+     */
+    protected lastMessageId: number = 0;
     listeners: ConnectionListener[] = [];
 
     private _isConnecting: boolean;
@@ -74,6 +78,24 @@ export class SmartPadClient {
             this.connection.on('open', onConnectionOpen);
             this.peer.on('error', onPeerError);
         });
+    }
+
+    /**
+     * Sends given message.
+     * 
+     * @param message 
+     * @param reliable
+     */
+    sendMessage(message: Message, reliable: boolean = false) {
+        // assign message id
+        message.id = this.lastMessageId++;
+        // send reliably, if set within message or parameter
+        if (reliable || message.reliable) {
+            message.reliable = reliable = true;
+        }
+        // TODO track reliable messages
+        // send through peer connection
+        this.connection.send(message);
     }
 
     /**
