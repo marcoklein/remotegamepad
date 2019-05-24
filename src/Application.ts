@@ -1,6 +1,8 @@
 import { UIElement } from "./ui/UIElement";
 import { Pad } from "./ui/Pad";
 import { Button } from "./ui/Button";
+import { ConnectionManager } from './ConnectionManager';
+import { PRE_ID } from "./globals";
 
 export class Application {
     canvas: HTMLCanvasElement;
@@ -36,6 +38,9 @@ export class Application {
         window.addEventListener('resize', () => this.resizeCanvas(), false);
         this.resizeCanvas();
         window.requestAnimationFrame(() => this.renderLoop());
+
+        let connectionManager = new ConnectionManager();
+        connectionManager.connect(PRE_ID + 'result');
     }
 
     /**

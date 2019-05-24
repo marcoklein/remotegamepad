@@ -1,6 +1,7 @@
 
 import Peer, { DataConnection } from 'peerjs';
 import { PRE_ID as PRE_CONNECTION_CODE } from '../globals';
+import { HostedConnection } from './HostedConnection';
 
 export class SmartPadServer {
 
@@ -16,19 +17,17 @@ export class SmartPadServer {
     _connectionCode: string;
 
     startingServer: boolean;
+
+    clients: HostedConnection[];
     
     /**
      * Creates a new server.
      */
     constructor() {
-
     }
 
 
     
-    handleClientConnect() {
-
-    }
 
     /**
      * Inits server by generating a connection code and setting up listeners.
@@ -37,6 +36,8 @@ export class SmartPadServer {
         if (this.startingServer || this.peer) {
             throw new Error('Server can not start twice. Call stop() if started.');
         }
+        // reset clients
+        this.clients = [];
         // prohibit second server starting to prevent errors
         this.startingServer = true;
         return new Promise((resolve, reject) => {
@@ -48,6 +49,7 @@ export class SmartPadServer {
                         // release starting lock
                         this.startingServer = false;
                         this._connectionCode = code;
+                        this.initNewServerPeer();
                         resolve(code);
                     } else {
                         numberOfTries++;
@@ -65,6 +67,13 @@ export class SmartPadServer {
 
             establishConnection();
         })
+    }
+
+    /**
+     * After successfull registration of a server peer event listeners need to be registered.
+     */
+    private initNewServerPeer() {
+        this.peer.on('connection', this.onPeerConnection);
     }
 
     /**
@@ -102,7 +111,37 @@ export class SmartPadServer {
         for (let i = 0; i < numberOfCharacters; i++) {
             result += characters.charAt(Math.floor(Math.random() * characters.length));
         }
-        return result;
+        return 'result';
+    }
+
+    /**
+     * Removes given hosted connection from server.
+     * 
+     * @param client 
+     */
+    removeHostedConnection(client: HostedConnection) {
+        let index = this.clients.indexOf(client);
+        if (index > -1) {
+            this.clients.splice(index, 1);
+        }
+    }
+
+    /* Callbacks */
+    
+    /**
+     * Called as new peer connection is initiated.
+     * Creates a new HostedConnection for the new client.
+     * 
+     * @param connection 
+     */
+    private onPeerConnection = (connection: DataConnection) => {
+        // create new hosted connection and store in client array
+        let client = new HostedConnection(this, connection);
+        console.log('clients: ', this.clients);
+        if (!this.clients) {
+            this.clients = [];
+        }
+        this.clients.push(client);
     }
 
     /* Getter and Setter */

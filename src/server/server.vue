@@ -7,8 +7,8 @@ div
     hr
     h3 Clients
     b-list-group
-      b-list-group-item Client A
-      b-list-group-item Client B
+      b-list-group-item(v-for='item in clients')
+        | {{ item.id }}
 </template>
 
 
@@ -24,16 +24,19 @@ export default class TestServerApp extends Vue {
         // initialize
         this.server = new SmartPadServer();
         this.server.start().then((id) => {
-            console.log('server opened with id ', id);
+            // provide connection code and clients to front end
             this.$data.connectionCode = this.server.connectionCode;
+            this.$data.clients = this.server.clients;
         });
     }
 
     data() {
         return {
-            connectionCode: '... connecting ...'
+            connectionCode: '... connecting ...',
+            clients: []
         };
     }
+
 
     
 
