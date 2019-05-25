@@ -2,7 +2,6 @@ import { UIElement } from "./ui/UIElement";
 import { Pad } from "./ui/Pad";
 import { Button } from "./ui/Button";
 import { SmartPadClient } from './SmartPadClient';
-import { PRE_ID } from "./globals";
 
 export class Application {
     canvas: HTMLCanvasElement;

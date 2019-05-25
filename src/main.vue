@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-  Overlay.overlay
+  Overlay.overlay(v-bind:network='network')
   #images(style='display: none')
     // Loaded images for canvas
     img#padDarkImage(src='assets/padDark.png')
@@ -12,25 +12,37 @@ div
 
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from 'vue';
+import Component from 'vue-class-component';
 import { Application } from './Application';
 import Overlay from './Overlay.vue';
-export default Vue.extend({
+
+
+@Component({
     components: {
         Overlay
-    },
-    mounted: () => {
+    }
+})
+export default class Main extends Vue {
+    application: Application;
+
+    mounted() {
         // initialize
         let canvas = <HTMLCanvasElement> document.getElementById('gamepadCanvas');
         // init application with canvas
         this.application = new Application(canvas);
-    },
+        this.$data.network = this.application.network;
+    }
+
     data() {
         return {
-            testString: 'hallo'
+            testString: 'hallo',
+            network: {
+                averagePing: -1
+            }
         }
     }
-});
+}
 </script>
 
 <style>
