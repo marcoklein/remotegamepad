@@ -53,6 +53,12 @@ export default class Overlay extends Vue {
 #overlayContainer {
     width: 100%;
     height: 100%;
+    /* Click through container */
+    pointer-events: none;
+}
+#overlayContainer > * {
+    /* Default click behavior for childs. */
+    pointer-events: initial;
 }
 /* Show fullscreenButton on top */
 #fullscreenButton {
