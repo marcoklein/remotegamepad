@@ -8,7 +8,7 @@ div
     h3 Clients
     b-list-group
       b-list-group-item(v-for='item in clients')
-        | {{ item.id }}
+        | {{ item.id }} | {{ item.lastPing }}
 </template>
 
 
@@ -16,28 +16,29 @@ div
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import { SmartPadServer } from './SmartPadServer';
+import { HostedConnection } from './HostedConnection';
+import { setTimeout } from 'timers';
 
 @Component
 export default class TestServerApp extends Vue {
+
     server: SmartPadServer;
-    mounted() {
+    
+    beforeCreate() {
         // initialize
         this.server = new SmartPadServer();
         this.server.start('result').then((id) => {
-            // provide connection code and clients to front end
+            // provide connection code to front end
             this.$data.connectionCode = this.server.connectionCode;
-            this.$data.clients = this.server.clients;
         });
     }
 
     data() {
         return {
             connectionCode: '... connecting ...',
-            clients: []
+            clients: this.server.clients
         };
     }
-
-
     
 
 }

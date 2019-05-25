@@ -1,7 +1,7 @@
 import { SmartPadServer } from "./SmartPadServer";
 import { DataConnection } from "peerjs";
 import { Message } from "../globals";
-import { AbstractPeerConnection } from "../ConnectionProxy";
+import { AbstractPeerConnection } from "../AbstractPeerConnection";
 
 /**
  * A connected client.
@@ -19,6 +19,8 @@ export class HostedConnection extends AbstractPeerConnection {
         this.server = server;
         this.connection = connection;
         this.id = connection.peer;
+
+        this.turnOnKeepAlive();
 
     }
 

@@ -137,13 +137,27 @@ export class SmartPadServer {
      * @param connection 
      */
     private onPeerConnection = (connection: DataConnection) => {
-        // create new hosted connection and store in client array
-        let client = new HostedConnection(this, connection);
-        console.log('clients: ', this.clients);
-        if (!this.clients) {
-            this.clients = [];
+        let removeListeners = () => {
+            connection.off('open', onOpenCallback);
+            connection.off('error', onErrorCallback);
         }
-        this.clients.push(client);
+        let onOpenCallback = () => {
+            removeListeners();
+
+            // create new hosted connection and store in client array
+            let client = new HostedConnection(this, connection);
+            console.log('clients: ', this.clients);
+            if (!this.clients) {
+                this.clients = [];
+            }
+            this.clients.push(client);
+        };
+        let onErrorCallback = (err) => {
+            removeListeners();
+            console.error('Connection err', err);
+        };
+        connection.on('open', onOpenCallback);
+        connection.on('error', onOpenCallback);
     }
 
     /* Getter and Setter */

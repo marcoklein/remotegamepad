@@ -2,7 +2,7 @@
 import Peer, { DataConnection } from 'peerjs';
 import { listeners } from 'cluster';
 import { PRE_ID, Message } from './globals';
-import { AbstractPeerConnection } from './ConnectionProxy';
+import { AbstractPeerConnection } from './AbstractPeerConnection';
 
 
 /**
@@ -28,6 +28,10 @@ export class SmartPadClient extends AbstractPeerConnection {
     listeners: ConnectionListener[] = [];
 
     private _isConnecting: boolean;
+
+    constructor() {
+        super();
+    }
 
 
     /**
@@ -81,9 +85,7 @@ export class SmartPadClient extends AbstractPeerConnection {
         this.peer.on('close', this.onPeerClose);
         
         // start keep alive process
-        if (this.sendKeepAlive) {
-            this.turnOnKeepAlive();
-        }
+        this.turnOnKeepAlive();
     }
 
     /*
@@ -124,10 +126,12 @@ export class SmartPadClient extends AbstractPeerConnection {
     /* Callbacks */
 
     protected onMessage(msg: Message): void {
+        console.log('on message', msg);
     }
     protected onConnectionClose(): void {
     }
     protected onConnectionError(err: any): void {
+        console.error('Connection error: ', err);
     }
 
     private onPeerClose = () => {
@@ -135,7 +139,7 @@ export class SmartPadClient extends AbstractPeerConnection {
     }
 
     private onPeerError = (err: any) => {
-
+        console.error('Peer error: ', err);
     }
 
     /* Getter and Setter */

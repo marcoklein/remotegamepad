@@ -8,22 +8,31 @@ export abstract class AbstractPeerConnection {
      */
     private _connection: DataConnection;
     
+
+    /* Message Tracking */
+
     /**
      * All sent messages get a unique id (counter).
      */
     protected lastMessageId: number = 0;
 
 
+    /* Keep Alive Feature */
+
     /**
      * WebRTC connections are unreliable if data is sent sporadic.
      * Therefore, the client sends keep alive messages in short intervals to esnure a stable connection.
      */
-    private _sendKeepAlive: boolean = true;
+    private _sendKeepAlive: boolean;
     private keepAliveTimeout: any;
     /**
      * Keep alive interval in milliseconds.
      */
     private keepAliveInterval: number = 70;
+
+    private lastPingId: number;
+    private lastPingStart: number;
+    private _lastPing: number = -1;
 
     constructor() {
     }
@@ -106,7 +115,8 @@ export abstract class AbstractPeerConnection {
      */
     private sendKeepAliveMessage() {
         // send ping message
-        this.sendMessage('ping');
+        this.lastPingId = this.sendMessage('ping');
+        this.lastPingStart = Date.now();
 
         // schedule next keep alive message
         this.keepAliveTimeout = setTimeout(() => {
@@ -123,6 +133,10 @@ export abstract class AbstractPeerConnection {
                 case 'ping':
                     // send pong
                     this.sendMessage('pong', { id: msg.id });
+                    break;
+                case 'pong':
+                    // handle pong message
+                    this._lastPing = Date.now() - this.lastPingStart;
                     break;
                 default:
                     this.onMessage(msg);
@@ -168,5 +182,9 @@ export abstract class AbstractPeerConnection {
      */
     get sendKeepAlive(): boolean {
         return this._sendKeepAlive;
+    }
+
+    get lastPing(): number {
+        return this._lastPing;
     }
 }
