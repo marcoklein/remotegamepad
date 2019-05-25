@@ -8,7 +8,7 @@ div
     h3 Clients
     b-list-group
       b-list-group-item(v-for='item in clients')
-        | {{ item.id }} | {{ item.lastPing }}
+        | {{ item.id }} | {{ item.averagePing }}
 </template>
 
 

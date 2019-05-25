@@ -33,6 +33,9 @@ export abstract class AbstractPeerConnection {
     private lastPingId: number;
     private lastPingStart: number;
     private _lastPing: number = -1;
+    numberOfStoredPings: number = 20;
+    private _pings: number[] = [];
+    private _averagePing: number = -1;
 
     constructor() {
     }
@@ -123,6 +126,19 @@ export abstract class AbstractPeerConnection {
             this.sendKeepAliveMessage();
         }, this.keepAliveInterval);
     }
+
+    private handlePongMessage(pingId: number) {
+        this._lastPing = Date.now() - this.lastPingStart;
+        // update pings
+        this._pings.push(this._lastPing);
+        // remove initial ping if too many
+        while(this._pings.length > this.numberOfStoredPings) {
+            this._pings.splice(0, 1);
+        }
+        // calculate average ping
+        let total = this._pings.reduce((a, b) => { return a + b; });
+        this._averagePing = total / this._pings.length;
+    }
     
     /* Callbacks */
 
@@ -136,7 +152,7 @@ export abstract class AbstractPeerConnection {
                     break;
                 case 'pong':
                     // handle pong message
-                    this._lastPing = Date.now() - this.lastPingStart;
+                    this.handlePongMessage(msg.data.id);
                     break;
                 default:
                     this.onMessage(msg);
@@ -186,5 +202,9 @@ export abstract class AbstractPeerConnection {
 
     get lastPing(): number {
         return this._lastPing;
+    }
+
+    get averagePing(): number {
+        return this._averagePing;
     }
 }
