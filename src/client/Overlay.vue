@@ -1,7 +1,7 @@
 <template lang="pug">
 div#overlayContainer
   h4 {{ network.averagePing }}
-  input#fullscreenButton.overlay(src='../assets/buttonExpand.png', type='image', alt='Fullscreen', v-on:click="toogleFullscreen", v-if="fullscreenEnabled && !isFullscreen")
+  input#fullscreenButton.overlay(src='/assets/buttonExpand.png', type='image', alt='Fullscreen', v-on:click="toogleFullscreen", v-if="fullscreenEnabled && !isFullscreen")
 </template>
 
 <script lang="ts">
