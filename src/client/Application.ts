@@ -52,12 +52,18 @@ export class Application {
         let pad = new Pad();
         pad.positionRelative.set(0.2, 0.8);
         this.addUiElement(pad);
+        pad.events.on('axisUpdate', (axis: {x: number, y: number}) => {
+            this.network.sendMessage('axisUpdate', {
+                padId: 0,
+                axis: axis
+            })
+        });
         // add button
         let buttonA = new Button();
         buttonA.positionRelative.set(0.8, 0.7);
         this.addUiElement(buttonA);
         buttonA.events.on('stateChanged', (pressed: boolean) => {
-            this.network.sendMessage('buttonChange', {
+            this.network.sendMessage('buttonUpdate', {
                 buttonId: 0,
                 pressed: pressed
             });

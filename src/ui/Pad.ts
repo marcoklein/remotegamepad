@@ -1,5 +1,6 @@
 import { Vector } from "./Vector";
 import { UIElement } from "./UIElement";
+import EventEmitter from 'eventemitter3';
 
 
 /**
@@ -15,6 +16,10 @@ export class Pad extends UIElement {
      */
     pointerIdentifier: number;
 
+    private _axis: Vector = new Vector();
+
+    readonly events: EventEmitter<'axisUpdate'> = new EventEmitter();
+
 
     onPointerDown(x: number, y: number, identifier: number): void {
         // first touch has to be inside movement radius
@@ -22,12 +27,14 @@ export class Pad extends UIElement {
             this.mousePos.set(x, y);
             this.mouseActive = true;
             this.pointerIdentifier = identifier;
+            this.refreshAxis();
         }
     }
     onPointerMove(x: number, y: number, identifier: number): void {
         if (this.pointerIdentifier === identifier) {
             // only update position for same pointer
             this.mousePos.set(x, y);
+            this.refreshAxis();
         }
     }
     onPointerUp(identifier: number): void {
@@ -36,6 +43,20 @@ export class Pad extends UIElement {
             this.pointerIdentifier = null;
             this.mouseActive = false;
         }
+    }
+
+    /**
+     * Recalculates axis.
+     */
+    private refreshAxis() {
+        if (this.mouseActive) {
+            // recalculate
+            this.mousePos.copy(this._axis).sub(this.positionAbsolute).normalize();
+        } else {
+            // set to zero otherwise
+            this._axis.set(0);
+        }
+        this.events.emit('axisUpdate', this.axis);
     }
 
     /**
@@ -78,6 +99,13 @@ export class Pad extends UIElement {
                 padImage,
                 targetVec.x - padImage.width / 2,
                 targetVec.y - padImage.height / 2);
+        }
+    }
+
+    get axis(): {x: number, y: number} {
+        return {
+            x: this._axis.x,
+            y: this._axis.y
         }
     }
 }
