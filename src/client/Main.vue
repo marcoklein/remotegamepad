@@ -3,9 +3,9 @@ div
   Overlay.overlay(v-bind:network='network')
   #images(style='display: none')
     // Loaded images for canvas
-    img#padDarkImage(src='assets/padDark.png')
-    img#padBackgroundDarkImage(src='assets/padBackgroundDark.png')
-    img#buttonAImage(src='assets/buttonA.png')
+    img#padDarkImage(src='../assets/padDark.png')
+    img#padBackgroundDarkImage(src='../assets/padBackgroundDark.png')
+    img#buttonAImage(src='../assets/buttonA.png')
   // canvas for rendering
   canvas#gamepadCanvas
 </template>

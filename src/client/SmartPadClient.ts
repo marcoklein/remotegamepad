@@ -1,8 +1,7 @@
 
 import Peer, { DataConnection } from 'peerjs';
-import { listeners } from 'cluster';
-import { PRE_ID, Message } from './globals';
-import { AbstractPeerConnection } from './AbstractPeerConnection';
+import { PRE_ID, Message } from './../globals';
+import { AbstractPeerConnection } from './../AbstractPeerConnection';
 
 
 /**

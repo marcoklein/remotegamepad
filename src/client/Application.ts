@@ -1,6 +1,6 @@
-import { UIElement } from "./ui/UIElement";
-import { Pad } from "./ui/Pad";
-import { Button } from "./ui/Button";
+import { UIElement } from "../ui/UIElement";
+import { Pad } from "../ui/Pad";
+import { Button } from "../ui/Button";
 import { SmartPadClient } from './SmartPadClient';
 
 export class Application {
@@ -56,6 +56,12 @@ export class Application {
         let buttonA = new Button();
         buttonA.positionRelative.set(0.8, 0.7);
         this.addUiElement(buttonA);
+        buttonA.events.on('stateChanged', (pressed: boolean) => {
+            this.network.sendMessage('buttonChange', {
+                buttonId: 0,
+                pressed: pressed
+            });
+        });
     }
 
     private attachEventListeners(canvas: HTMLCanvasElement) {

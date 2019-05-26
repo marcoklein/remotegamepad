@@ -4,8 +4,8 @@
     "description": "Mobile HTML5 web gamepad for the smartphone.",
     "main": "index.js",
     "scripts": {
-        "dev": "concurrently \"copyfiles -u 1 src/assets/* dist\"  \"parcel src/index.html src/server/server.html --open\"",
-        "build": "concurrently \"copyfiles -u 1 src/assets/* docs\" \"parcel build src/index.html src/server/server.html -d docs --public-url ./\"",
+        "dev": "concurrently \"copyfiles -u 1 src/assets/* dist\"  \"parcel src/index.html src/server.html --open\"",
+        "build": "concurrently \"copyfiles -u 1 src/assets/* docs\" \"parcel build src/index.html src/server.html -d docs --public-url ./\"",
         "version:patch": "npm version patch"
     },
     "repository": {
