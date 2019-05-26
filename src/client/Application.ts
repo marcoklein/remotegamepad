@@ -54,7 +54,7 @@ export class Application {
         this.addUiElement(pad);
         pad.events.on('axisUpdate', (axis: {x: number, y: number}) => {
             this.network.sendMessage('axisUpdate', {
-                padId: 0,
+                index: 0,
                 axis: axis
             })
         });
@@ -64,7 +64,7 @@ export class Application {
         this.addUiElement(buttonA);
         buttonA.events.on('stateChanged', (pressed: boolean) => {
             this.network.sendMessage('buttonUpdate', {
-                buttonId: 0,
+                index: 0,
                 pressed: pressed
             });
         });

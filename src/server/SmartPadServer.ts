@@ -2,7 +2,12 @@
 import Peer, { DataConnection } from 'peerjs';
 import { PRE_ID as PRE_CONNECTION_CODE } from '../globals';
 import { HostedConnection } from './HostedConnection';
+import EventEmitter from 'eventemitter3';
 
+/**
+ * Buttons follow official W3C HTML Gamepad Specifications from
+ * https://www.w3.org/TR/gamepad/#remapping
+ */
 export class SmartPadServer {
 
     /**
@@ -19,6 +24,8 @@ export class SmartPadServer {
     startingServer: boolean;
 
     clients: HostedConnection[];
+
+    events: EventEmitter<'client_connected' | 'client_disconnected'> = new EventEmitter();
     
     /**
      * Creates a new server.
@@ -124,11 +131,16 @@ export class SmartPadServer {
     removeHostedConnection(client: HostedConnection) {
         let index = this.clients.indexOf(client);
         if (index > -1) {
+            this.events.emit('client_disconnected', client);
             this.clients.splice(index, 1);
         }
     }
 
     /* Callbacks */
+
+    private onButtonUpdate = () => {
+
+    }
     
     /**
      * Called as new peer connection is initiated.
@@ -146,11 +158,13 @@ export class SmartPadServer {
 
             // create new hosted connection and store in client array
             let client = new HostedConnection(this, connection);
-            console.log('clients: ', this.clients);
+            // add client listeners
+            client.events.on('buttonUpdate', this.onButtonUpdate);
             if (!this.clients) {
                 this.clients = [];
             }
             this.clients.push(client);
+            this.events.emit('client_connected', client);
         };
         let onErrorCallback = (err) => {
             removeListeners();
@@ -167,41 +181,3 @@ export class SmartPadServer {
     }
 
 }
-
-/*
-console.log('Creating new peer.');
-let peer = new Peer('CATCHME2TFT');
-
-peer.on('open', (id) => {
-    console.log('Peer ready with id: ', id);
-});
-
-peer.on('connection', (conn) => {
-    // measure ping continuously
-    let pingStart: number;
-    let measurePing = () => {
-        console.log('send ping');
-        pingStart = Date.now();
-        conn.send('ping');
-        setTimeout(() => {
-            measurePing();
-        }, 1000);
-    }
-
-    conn.on('data', (data) => {
-        console.log('received data: ', data);
-        if (data === 'pong') {
-            // stop ping measure
-            console.log('received pong');
-            let ping = Date.now() - pingStart;
-            console.log('ping: ' + ping);
-            conn.send({t: 'ping', v: ping});
-        } else if (data === 'ping') {
-            conn.send('pong');
-        }
-    });
-    console.log('Another peer connected!', conn.peer);
-    console.log('Sending welcome messsage.');
-    conn.send('Welcome');
-    measurePing();
-});*/

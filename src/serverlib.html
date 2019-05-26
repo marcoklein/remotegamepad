@@ -1,0 +1,28 @@
+<!DOCTYPE html> <!-- the main language of the page declared -->
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <!-- a viewport declaration which does not disable zooming -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- a descriptive label for the page -->
+    <title>TestPeer Smartphone Gamepad</title>
+</head>
+
+<body>
+
+    <script src="./server/serverlib.ts"></script>
+
+    <script>
+        window.addEventListener("gamepadconnected", function (e) {
+            var gp = navigator.getGamepads()[e.gamepad.index];
+            console.log(e.gamepad.id);
+            console.log(e.gamepad.index);
+            console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
+                gp.index, gp.id,
+                gp.buttons.length, gp.axes.length);
+        });
+    </script>
+</body>
+
+</html>

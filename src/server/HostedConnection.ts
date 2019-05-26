@@ -2,6 +2,7 @@ import { SmartPadServer } from "./SmartPadServer";
 import { DataConnection } from "peerjs";
 import { Message } from "../globals";
 import { AbstractPeerConnection } from "../AbstractPeerConnection";
+import EventEmitter from 'eventemitter3';
 
 /**
  * A connected client.
@@ -13,6 +14,7 @@ export class HostedConnection extends AbstractPeerConnection {
      */
     readonly server: SmartPadServer;
     readonly id: string;
+    readonly events: EventEmitter<'buttonUpdate' | 'axisUpdate'> = new EventEmitter();
 
     constructor(server: SmartPadServer, connection: DataConnection) {
         super();
@@ -21,7 +23,6 @@ export class HostedConnection extends AbstractPeerConnection {
         this.id = connection.peer;
 
         this.turnOnKeepAlive();
-
     }
 
 
@@ -34,7 +35,22 @@ export class HostedConnection extends AbstractPeerConnection {
 
     
     protected onMessage(msg: Message): void {
-        console.log('on message', msg);
+        switch (msg.type) {
+            case 'axisUpdate': {
+                // axis updates are sent with one index and two axis
+                let axisIndex = msg.data.index * 2;
+                this.events.emit('axisUpdate', axisIndex, msg.data.axis.x);
+                this.events.emit('axisUpdate', axisIndex + 1, msg.data.axis.y);
+                break;
+            }
+            case 'buttonUpdate': {
+                this.events.emit('buttonUpdate', msg.data.index, msg.data.pressed);
+                break;
+            }
+            default: {
+                console.warn('Unhandled message type: ', msg.type);
+            }
+        }
     }
     protected onConnectionClose(): void {
         console.log('hosted connection close');
@@ -45,34 +61,4 @@ export class HostedConnection extends AbstractPeerConnection {
         this.removeFromServer();
     }
 
-
-
-/*
-            // measure ping continuously
-            let pingStart: number;
-            let measurePing = () => {
-                console.log('send ping');
-                pingStart = Date.now();
-                conn.send('ping');
-                setTimeout(() => {
-                    measurePing();
-                }, 1000);
-            }
-        
-            conn.on('data', (data) => {
-                console.log('received data: ', data);
-                if (data === 'pong') {
-                    // stop ping measure
-                    console.log('received pong');
-                    let ping = Date.now() - pingStart;
-                    console.log('ping: ' + ping);
-                    conn.send({t: 'ping', v: ping});
-                } else if (data === 'ping') {
-                    conn.send('pong');
-                }
-            });
-            console.log('Another peer connected!', conn.peer);
-            console.log('Sending welcome messsage.');
-            conn.send('Welcome');
-            measurePing();*/
 }
