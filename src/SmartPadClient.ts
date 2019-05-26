@@ -88,40 +88,6 @@ export class SmartPadClient extends AbstractPeerConnection {
         this.turnOnKeepAlive();
     }
 
-    /*
-            // measure latency by sending ping requests
-            let pingStart: number;
-            let measurePing = () => {
-                // send ping
-                pingStart = Date.now();
-                this.connection.send('ping');
-                setTimeout(() => {
-                    // ping every second
-                    measurePing();
-                }, 70);
-            }
-
-            // listen for incoming data
-            this.connection.on('data', (data) => {
-                console.log('received data: ', data);
-                if (data === 'ping') {
-                    this.connection.send('pong');
-                } else if (data === 'pong') {
-                    // received pong
-                    this.lastPing = Date.now() - pingStart;
-                } else if (typeof data === 'object') {
-                    data = <{t: any, v: any}> data;
-                    if (data.t === 'ping') {
-                        // received last ping value
-                        this.lastMeasuredPeerPing = data.v;
-                    }
-                }
-                
-            });
-
-            measurePing();
-    */
-
     
     /* Callbacks */
 
