@@ -6,8 +6,15 @@ div
     img#padDarkImage(src='../assets/padDark.png')
     img#padBackgroundDarkImage(src='../assets/padBackgroundDark.png')
     img#buttonAImage(src='../assets/buttonA.png')
+    
+  // alerts
+  b-alert(:show='dismissCountDown', dismissible='', variant='warning', @dismissed='dismissCountDown=0', @dismiss-count-down='countDownChanged')
+    p {{ alertWarningMessage }}
+    b-progress(variant='warning', :max='dismissSecs', :value='dismissCountDown', height='4px')
   // canvas for rendering
   canvas#gamepadCanvas
+
+
 </template>
 
 
@@ -16,6 +23,7 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import { Application } from './Application';
 import Overlay from './Overlay.vue';
+import { SmartPadClient } from './SmartPadClient';
 
 
 @Component({
@@ -26,22 +34,40 @@ import Overlay from './Overlay.vue';
 export default class Main extends Vue {
     application: Application;
 
+    network: SmartPadClient = null;
+    dismissCountDown = 0;
+    dismissSecs = 5;
+    alertWarningMessage = '';
+
     mounted() {
         // initialize
         let canvas = <HTMLCanvasElement> document.getElementById('gamepadCanvas');
         // init application with canvas
         this.application = new Application(canvas);
-        this.$data.network = this.application.network;
+
+        this.application.network.connect('result').catch((reason) => {
+            console.log('connect error', reason);
+            this.showWarning('Connect Error: ' + reason);
+        });
+        this.application.network.events.on('peerError', (err) => {
+            this.showWarning('Connect Error: ' + err);
+        });
+        this.application.network.events.on('connectionError', (err) => {
+            this.showWarning('Connect Error: ' + err);
+        });
+
+        this.network = this.application.network;
+
     }
 
-    data() {
-        return {
-            testString: 'hallo',
-            network: {
-                averagePing: -1
-            }
-        }
+    showWarning(msg: string) {
+        this.alertWarningMessage = msg;
+        this.dismissCountDown = this.dismissSecs;
     }
+    countDownChanged(dismissCountDown) {
+        this.dismissCountDown = dismissCountDown
+    }
+
 }
 </script>
 
@@ -60,5 +86,10 @@ html, body {
 }
 .overlay {
     position: absolute;
+}
+b-alert {
+    position: absolute;
+    top: 0px;
+    left: 0px;
 }
 </style>

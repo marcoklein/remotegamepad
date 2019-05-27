@@ -41,7 +41,6 @@ export class Application {
         window.requestAnimationFrame(() => this.renderLoop());
 
         this.network = new SmartPadClient();
-        this.network.connect('result');
     }
 
     /**

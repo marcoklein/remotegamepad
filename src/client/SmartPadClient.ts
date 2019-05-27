@@ -2,6 +2,7 @@
 import Peer, { DataConnection } from 'peerjs';
 import { PRE_ID, Message } from './../globals';
 import { AbstractPeerConnection } from './../AbstractPeerConnection';
+import EventEmitter from 'eventemitter3';
 
 
 /**
@@ -27,6 +28,8 @@ export class SmartPadClient extends AbstractPeerConnection {
     listeners: ConnectionListener[] = [];
 
     private _isConnecting: boolean;
+
+    readonly events: EventEmitter<'peerError' | 'peerClose' | 'connectionError' | 'connectionClose'> = new EventEmitter();
 
     constructor() {
         super();
@@ -66,6 +69,7 @@ export class SmartPadClient extends AbstractPeerConnection {
                 removeTemporaryEventListeners();
                 this.peer.destroy();
                 this.peer = null;
+                console.error('Error on opening peer connection', err);
                 reject(err);
             }
             // listen to open and error event of connect
@@ -94,17 +98,22 @@ export class SmartPadClient extends AbstractPeerConnection {
         console.log('on message', msg);
     }
     protected onConnectionClose(): void {
+        console.log('on connection close')
+        this.events.emit('connectionClose');
     }
     protected onConnectionError(err: any): void {
         console.error('Connection error: ', err);
+        this.events.emit('connectionError', err);
     }
 
     private onPeerClose = () => {
-
+        console.log('on peer close');
+        this.events.emit('peerClose');
     }
 
     private onPeerError = (err: any) => {
         console.error('Peer error: ', err);
+        this.events.emit('peerError', err);
     }
 
     /* Getter and Setter */
