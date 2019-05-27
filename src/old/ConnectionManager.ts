@@ -1,6 +1,7 @@
 
 import Peer, { DataConnection } from 'peerjs';
 import { listeners } from 'cluster';
+import { CONNECTION_PROPS } from '../globals';
 
 
 /**
@@ -22,7 +23,7 @@ export class ConnectionManager {
     lastPing: number;
 
     constructor() {
-        this.peer = new Peer({debug: 2});
+        this.peer = new Peer(CONNECTION_PROPS);
     }
 
     addListener(connListener: ConnectionListener) {

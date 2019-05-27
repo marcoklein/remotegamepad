@@ -66,7 +66,7 @@ export class NetworkGamepadAPIClass {
 
         // create and start smart pad server
         let server = new SmartPadServer();
-        server.start('result');
+        server.start('catchme2');
 
         server.events.on('client_connected', (client: HostedConnection) => {
             let gamepad = new RemoteGamepad(client, this);

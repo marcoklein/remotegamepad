@@ -10,3 +10,10 @@ export type Message = {
     type: string;
     data?: any;
 }
+
+export const CONNECTION_PROPS = {};
+/*export const CONNECTION_PROPS = {
+    host: 'kleinprojects.com',
+    port: 9000,
+    path: '/'
+}*/

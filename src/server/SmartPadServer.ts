@@ -1,6 +1,6 @@
 
 import Peer, { DataConnection } from 'peerjs';
-import { PRE_ID as PRE_CONNECTION_CODE } from '../globals';
+import { PRE_ID as PRE_CONNECTION_CODE, CONNECTION_PROPS } from '../globals';
 import { HostedConnection } from './HostedConnection';
 import EventEmitter from 'eventemitter3';
 
@@ -106,7 +106,7 @@ export class SmartPadServer {
             callback(err);
         }
         // create peer
-        this.peer = new Peer(PRE_CONNECTION_CODE + connectionCode);
+        this.peer = new Peer(PRE_CONNECTION_CODE + connectionCode, CONNECTION_PROPS);
         this.peer.on('open', openCallback);
         this.peer.on('error', errorCallback);
     }

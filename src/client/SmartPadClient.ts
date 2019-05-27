@@ -1,6 +1,6 @@
 
 import Peer, { DataConnection } from 'peerjs';
-import { PRE_ID, Message } from './../globals';
+import { PRE_ID, Message, CONNECTION_PROPS } from './../globals';
 import { AbstractPeerConnection } from './../AbstractPeerConnection';
 import EventEmitter from 'eventemitter3';
 
@@ -50,7 +50,7 @@ export class SmartPadClient extends AbstractPeerConnection {
         this._isConnecting = true;
         return new Promise((resolve, reject) => {
             // create new peer
-            this.peer = new Peer();
+            this.peer = new Peer(CONNECTION_PROPS);
             this.connection = this.peer.connect(PRE_ID + connectionCode);
 
             // remove temporary event listener

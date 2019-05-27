@@ -59,6 +59,10 @@ export abstract class AbstractPeerConnection {
      */
     sendMessage(message: Message, reliable?: boolean): number;
     sendMessage(message: Message | string, reliable: boolean | any, p3?: boolean): number {
+        if (!this._connection.open) {
+            console.warn('Tried to send message with closed connection.');
+            return;
+        }
         if (typeof message === 'string') {
             // first overload
             message = {
