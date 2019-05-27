@@ -1,7 +1,7 @@
 {
     "name": "mobile-browser-gamepad",
     "version": "0.1.7",
-    "description": "Mobile HTML5 web gamepad for the smartphone.",
+    "description": "Mobile HTML5 web gamepad for the smartphone leveraging WebRTC.",
     "main": "index.js",
     "scripts": {
         "dev": "concurrently \"copyfiles -u 1 src/assets/* dist\"  \"parcel src/*.html --open\"",
@@ -18,7 +18,8 @@
         "Mobile",
         "Web",
         "HTML5",
-        "Smartphone"
+        "Smartphone",
+        "WebRTC"
     ],
     "author": "Marco Klein",
     "license": "MIT",

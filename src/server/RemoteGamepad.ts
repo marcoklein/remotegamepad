@@ -1,8 +1,10 @@
 import { HostedConnection } from "./HostedConnection";
+import { NetworkGamepadAPIClass } from "./serverlib";
 
 /**
  * Specifications follow https://www.w3.org/TR/gamepad/#gamepad-interface.
  * 
+ * Implementation of the native Gamepad implementation.
  */
 export class RemoteGamepad implements Gamepad {
 
@@ -27,6 +29,8 @@ export class RemoteGamepad implements Gamepad {
     timestamp: DOMHighResTimeStamp = window.performance.now();
 
     readonly client: HostedConnection;
+
+    private readonly api: NetworkGamepadAPIClass;
 
     readonly axes: [number, number, number, number] = [
         0, // pad left  x0
@@ -64,8 +68,9 @@ export class RemoteGamepad implements Gamepad {
         { pressed: false, value: 0, touched: false }
     ];
 
-    constructor(client: HostedConnection) {
+    constructor(client: HostedConnection, api: NetworkGamepadAPIClass) {
         this.client = client;
+        this.api = api;
         this.registerClientListeners();
     }
 
@@ -99,9 +104,12 @@ export class RemoteGamepad implements Gamepad {
     
     private disconnect = () => {
         this.connected = false;
+        // remove gamepad
+        this.api.gamepads[this.index] = undefined;
         let event = new CustomEvent('gamepaddisconnected', {});
         (<any> event).gamepad = this; // add gamepad to event
         window.dispatchEvent(event);
+
     }
 
     private onButtonUpdate = (buttonIndex: number, pressed: boolean) => {
