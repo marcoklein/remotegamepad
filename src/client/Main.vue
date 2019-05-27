@@ -58,7 +58,7 @@ export default class Main extends Vue {
         // init application with canvas
         this.application = new Application(canvas);
 
-        this.application.network.connect('result').catch((reason) => {
+        this.application.network.connect('catchme2').catch((reason) => {
             console.log('connect error', reason);
             this.showWarning('Connect Error: ' + reason);
         });
