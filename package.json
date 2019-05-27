@@ -1,6 +1,6 @@
 {
     "name": "mobile-browser-gamepad",
-    "version": "0.1.7",
+    "version": "0.1.8",
     "description": "Mobile HTML5 web gamepad for the smartphone leveraging WebRTC.",
     "main": "index.js",
     "scripts": {
