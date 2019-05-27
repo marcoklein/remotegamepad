@@ -47,34 +47,60 @@ export class SmartPadClient extends AbstractPeerConnection {
             console.warn('Connection attempt during ongoing connection.');
             return;
         }
+        console.log('Connecting...');
         this._isConnecting = true;
         return new Promise((resolve, reject) => {
             // create new peer
             this.peer = new Peer(CONNECTION_PROPS);
-            this.connection = this.peer.connect(PRE_ID + connectionCode);
 
-            // remove temporary event listener
-            let removeTemporaryEventListeners = () => {
-                this.connection.off('open', onConnectionOpen);
-                this.connection.off('open', onPeerError);
-            }
-            // listen for open
-            let onConnectionOpen = () => {
-                removeTemporaryEventListeners();
-                this.initConnectedPeer();
-                resolve(this);
-            }
-            // listen for error
-            let onPeerError = (err: any) => {
-                removeTemporaryEventListeners();
-                this.peer.destroy();
-                this.peer = null;
-                console.error('Error on opening peer connection', err);
-                reject(err);
-            }
-            // listen to open and error event of connect
-            this.connection.on('open', onConnectionOpen);
-            this.peer.on('error', onPeerError);
+            this.peer.on('open', (id: string) => {
+                console.log('peer open ', id);
+
+                this.connection = this.peer.connect(PRE_ID + connectionCode);
+                    
+                // remove temporary event listener
+                let removeTemporaryEventListeners = () => {
+                    this.connection.off('open', onConnectionOpen);
+                    this.connection.off('error', onPeerError);
+                }
+                // listen for open
+                let onConnectionOpen = () => {
+                    console.log('Connection successfull.');
+                    removeTemporaryEventListeners();
+                    this.initConnectedPeer();
+                    resolve(this);
+                }
+                // listen for error
+                let onPeerError = (err: any) => {
+                    console.error('Error on opening peer connection', err);
+                    removeTemporaryEventListeners();
+                    this.peer.destroy();
+                    this.peer = null;
+                    reject(err);
+                }
+                // listen to open and error event of connect
+                this.connection.on('open', onConnectionOpen);
+                this.connection.on('close', () => {
+                    console.error('pre close');
+                });
+                this.connection.on('data', () => {
+                    console.error('pre on data');
+                })
+                this.connection.on('error', (err) => {
+                    console.error('pre error: ', err);
+                });
+                this.peer.on('error', onPeerError);
+                this.peer.on('close', () => {
+                    console.error('peer pre on close');
+                });
+                this.peer.on('open', (id: string) => {
+                    console.error('peer open', id);
+                });
+                this.peer.on('connection', () => {
+                    console.error('peer pre conn');
+                })
+            });
+
         });
     }
 

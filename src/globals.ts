@@ -11,7 +11,7 @@ export type Message = {
     data?: any;
 }
 
-export const CONNECTION_PROPS = {};
+export const CONNECTION_PROPS = undefined;
 /*export const CONNECTION_PROPS = {
     host: 'kleinprojects.com',
     port: 9000,
