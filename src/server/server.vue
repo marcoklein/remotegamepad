@@ -17,7 +17,6 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import { SmartPadServer } from './SmartPadServer';
 import { HostedConnection } from './HostedConnection';
-import { setTimeout } from 'timers';
 
 @Component
 export default class TestServerApp extends Vue {
