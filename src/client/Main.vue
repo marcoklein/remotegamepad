@@ -41,7 +41,7 @@ export default class Main extends Vue {
 
     network: SmartPadClient = null;
     dismissCountDown = 0;
-    dismissSecs = 200;
+    dismissSecs = 5;
     alertWarningMessage = '';
     fullscreenEnabled = fullscreenPlugin.enabled;
     isFullscreen = fullscreenPlugin.isFullscreen;
