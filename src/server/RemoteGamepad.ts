@@ -5,6 +5,7 @@ import { HostedConnection } from "./HostedConnection";
  * 
  */
 export class RemoteGamepad implements Gamepad {
+
     /*
     readonly attribute DOMString id;
     readonly attribute long index;
@@ -71,12 +72,10 @@ export class RemoteGamepad implements Gamepad {
     private registerClientListeners() {
         this.client.events.on('buttonUpdate', this.onButtonUpdate);
         this.client.events.on('axisUpdate', this.onAxisUpdate);
+        this.client.events.on('disconnect', this.disconnect);
     }
 
 
-    disconnect() {
-        // TODO
-    }
 
     updateButton(buttonId: number, pressed: boolean) {
         // update gamepad timestamp
@@ -97,11 +96,19 @@ export class RemoteGamepad implements Gamepad {
 
     /* Callbacks */
 
-    private onButtonUpdate = (buttonIndex: number, pressed: boolean) => {
+    
+    private disconnect = () => {
+        this.connected = false;
+        let event = new CustomEvent('gamepaddisconnected', {});
+        (<any> event).gamepad = this; // add gamepad to event
+        window.dispatchEvent(event);
+    }
 
+    private onButtonUpdate = (buttonIndex: number, pressed: boolean) => {
+        this.updateButton(buttonIndex, pressed);
     }
     
     private onAxisUpdate = (axisIndex: number, value: number) => {
-
+        this.axes[axisIndex] = value;
     }
 }

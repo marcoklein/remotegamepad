@@ -79,4 +79,8 @@ server.events.on('client_connected', (client: HostedConnection) => {
     let gamepad = new RemoteGamepad(client);
     waitingGamepads.push(gamepad);
     processWaitingGamepads();
-})
+});
+
+server.events.on('client_disconnected', (client: HostedConnection) => {
+   // TODO remove gamepad with client connection 
+});

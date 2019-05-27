@@ -14,8 +14,15 @@ export class HostedConnection extends AbstractPeerConnection {
      */
     readonly server: SmartPadServer;
     readonly id: string;
-    readonly events: EventEmitter<'buttonUpdate' | 'axisUpdate'> = new EventEmitter();
+    readonly events: EventEmitter<'buttonUpdate' | 'axisUpdate' | 'disconnect'> = new EventEmitter();
 
+    /**
+     * Create new HostedConnection instance.
+     * Connection has to be already open.
+     * 
+     * @param server 
+     * @param connection 
+     */
     constructor(server: SmartPadServer, connection: DataConnection) {
         super();
         this.server = server;
@@ -29,6 +36,7 @@ export class HostedConnection extends AbstractPeerConnection {
     private removeFromServer() {
         this.connection.close();
         this.server.removeHostedConnection(this);
+        this.events.emit('disconnect');
     }
 
     /* Callbacks */
