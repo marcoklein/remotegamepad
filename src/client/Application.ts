@@ -72,34 +72,41 @@ export class Application {
     private attachEventListeners(canvas: HTMLCanvasElement) {
         // add mouse events
         canvas.addEventListener('mousedown', (event) => {
+            event.preventDefault();
             this.handlePointerDown(event.pageX, event.pageY, 0);
         }, false);
         canvas.addEventListener('mousemove', (event) => {
+            event.preventDefault();
             this.handlePointerMove(event.pageX, event.pageY, 0);
         }, false);
         canvas.addEventListener('mouseup', (event) => {
+            event.preventDefault();
             this.handlePointerUp(0);
         }, false);
         // add touch events
         canvas.addEventListener('touchstart', (event) => {
+            event.preventDefault();
             for (let i = 0; i < event.targetTouches.length; i++) {
                 let touch = event.targetTouches[i];
                 this.handlePointerDown(touch.pageX, touch.pageY, touch.identifier);
             }
         }, false);
         canvas.addEventListener('touchmove', (event) => {
+            event.preventDefault();
             for (let i = 0; i < event.targetTouches.length; i++) {
                 let touch = event.targetTouches[i];
                 this.handlePointerMove(touch.pageX, touch.pageY, touch.identifier);
             }
         }, false);
         canvas.addEventListener('touchend', (event) => {
+            event.preventDefault();
             for (let i = 0; i < event.changedTouches.length; i++) {
                 let touch = event.changedTouches[i];
                 this.handlePointerUp(touch.identifier);
             }
         }, false);
         canvas.addEventListener('touchcancel', (event) => {
+            event.preventDefault();
             for (let i = 0; i < event.changedTouches.length; i++) {
                 let touch = event.changedTouches[i];
                 this.handlePointerUp(touch.identifier);
