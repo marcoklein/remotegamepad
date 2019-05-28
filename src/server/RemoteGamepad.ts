@@ -25,7 +25,7 @@ export class RemoteGamepad implements Gamepad {
     mapping: GamepadMappingType = "standard";
     pose: GamepadPose = null;
 
-    connected: boolean = false;
+    connected: boolean = true;
     timestamp: DOMHighResTimeStamp = window.performance.now();
 
     readonly client: HostedConnection;
@@ -117,6 +117,7 @@ export class RemoteGamepad implements Gamepad {
     }
     
     private onAxisUpdate = (axisIndex: number, value: number) => {
+        this.timestamp = window.performance.now();
         this.axes[axisIndex] = value;
     }
 }

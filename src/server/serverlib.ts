@@ -69,6 +69,7 @@ export class NetworkGamepadAPIClass {
         server.start('catchme2');
 
         server.events.on('client_connected', (client: HostedConnection) => {
+            console.log('client connected');
             let gamepad = new RemoteGamepad(client, this);
             this.waitingGamepads.push(gamepad);
             this.processWaitingGamepads();
@@ -108,6 +109,7 @@ export class NetworkGamepadAPIClass {
             let event = new CustomEvent('gamepadconnected', {});
             (<any> event).gamepad = gamepad; // add gamepad to event
             window.dispatchEvent(event);
+            console.log('dispatched gamepadconnected event');
         }
     }
 
