@@ -4,7 +4,8 @@ div
   div#overlayContainer
     h4(v-if='network') {{ network.averagePing }}
     // fullscreen button
-    input#fullscreenButton.overlay(src='../assets/buttonExpand.png', type='image', alt='Fullscreen', v-on:click="toogleFullscreen", v-if="fullscreenEnabled && !isFullscreen")
+    button#fullscreenButton.overlay(type='button', alt='Fullscreen', v-on:click="toogleFullscreen", v-if="fullscreenEnabled && !isFullscreen")
+        img(src='../assets/buttonExpand.png')
   
     // alerts
     div#alertContainer.overlay
@@ -128,5 +129,7 @@ html, body {
     top: 16px;
     right: 16px;
     cursor: pointer;
+    background: transparent;
+    border: 0;
 }
 </style>
