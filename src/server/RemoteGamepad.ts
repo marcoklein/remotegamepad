@@ -24,7 +24,7 @@ export class RemoteGamepad implements Gamepad {
     index: number = -1;
     mapping: GamepadMappingType = "standard";
     pose: GamepadPose = null;
-    readonly displayId: number;
+    readonly displayId: number = -1;
 
     connected: boolean = true;
     timestamp: DOMHighResTimeStamp = window.performance.now();
