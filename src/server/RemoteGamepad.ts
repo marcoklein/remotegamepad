@@ -19,11 +19,12 @@ export class RemoteGamepad implements Gamepad {
     */
 
     hand: GamepadHand = "";
-    hapticActuators: readonly GamepadHapticActuator[];
+    readonly hapticActuators: GamepadHapticActuator[];
     id: string = "<no id>";
     index: number = -1;
     mapping: GamepadMappingType = "standard";
     pose: GamepadPose = null;
+    readonly displayId: number;
 
     connected: boolean = true;
     timestamp: DOMHighResTimeStamp = window.performance.now();
