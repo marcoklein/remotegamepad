@@ -42,15 +42,15 @@
         "vue-class-component": "^7.1.0",
         "vue-property-decorator": "^8.1.1",
         "vue-template-compiler": "^2.6.10",
-        "vue": "^2.6.10",
-        "vue-hot-reload-api": "^2.3.3",
-        "screenfull": "^4.2.0",
+        "vue-hot-reload-api": "^2.3.3"
+    },
+    "dependencies": {
         "bootstrap": "^4.3.1",
         "bootstrap-vue": "^2.0.0-rc.20",
         "eventemitter3": "^3.1.2",
         "jquery": "^3.4.1",
-        "peerjs": "^1.0.0"
-    },
-    "dependencies": {
+        "peerjs": "^1.0.0",
+        "screenfull": "^4.2.0",
+        "vue": "^2.6.10"
     }
 }
