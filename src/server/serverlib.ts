@@ -1,6 +1,5 @@
-import { HostedConnection } from "./HostedConnection";
-import { SmartPadClient } from "../client/SmartPadClient";
-import { SmartPadServer } from "./SmartPadServer";
+import { HostedConnection } from "../network/server/HostedConnection";
+import { SmartPadServer } from "../network/server/SmartPadServer";
 import { RemoteGamepad } from "./RemoteGamepad";
 
 

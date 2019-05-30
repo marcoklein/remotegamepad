@@ -1,4 +1,4 @@
-import { HostedConnection } from "./HostedConnection";
+import { HostedConnection } from "../network/server/HostedConnection";
 import { NetworkGamepadAPIClass } from "./serverlib";
 
 /**
@@ -28,7 +28,7 @@ export class RemoteGamepad implements Gamepad {
     connected: boolean = true;
     timestamp: DOMHighResTimeStamp = window.performance.now();
 
-    readonly client: HostedConnection;
+    readonly remote: HostedConnection;
 
     private readonly api: NetworkGamepadAPIClass;
 
@@ -69,15 +69,15 @@ export class RemoteGamepad implements Gamepad {
     ];
 
     constructor(client: HostedConnection, api: NetworkGamepadAPIClass) {
-        this.client = client;
+        this.remote = client;
         this.api = api;
         this.registerClientListeners();
     }
 
     private registerClientListeners() {
-        this.client.events.on('buttonUpdate', this.onButtonUpdate);
-        this.client.events.on('axisUpdate', this.onAxisUpdate);
-        this.client.events.on('disconnect', this.disconnect);
+        this.remote.events.on('buttonUpdate', this.onButtonUpdate);
+        this.remote.events.on('axisUpdate', this.onAxisUpdate);
+        this.remote.events.on('disconnect', this.disconnect);
     }
 
 

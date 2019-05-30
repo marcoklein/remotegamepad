@@ -1,8 +1,12 @@
-import { UIElement } from "../ui/UIElement";
-import { Pad } from "../ui/Pad";
-import { Button } from "../ui/Button";
-import { SmartPadClient } from './SmartPadClient';
+import { UIElement } from "./ui/UIElement";
+import { Pad } from "./ui/Pad";
+import { Button } from "./ui/Button";
+import { SmartPadClient } from '../network/client/SmartPadClient';
 
+/**
+ * Main logic for the client.
+ * Manages the gamepad user interface, including ui elements like buttons and pads.
+ */
 export class Application {
     canvas: HTMLCanvasElement;
     /**

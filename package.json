@@ -1,7 +1,7 @@
 {
-    "name": "mobile-browser-gamepad",
+    "name": "remotegamepad",
     "version": "0.3.0",
-    "description": "Mobile HTML5 web gamepad for the smartphone leveraging WebRTC.",
+    "description": "Mobile HTML5 web gamepad for the smartphone directly mapping to the native gamepad API communicating through WebRTC.",
     "main": "index.js",
     "scripts": {
         "dev": "concurrently \"copyfiles -u 1 src/assets/* dist\"  \"parcel src/*.html --open\"",
@@ -11,7 +11,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/marcoklein/mobile-browser-gamepad.git"
+        "url": "git+https://github.com/marcoklein/remotegamepad.git"
     },
     "keywords": [
         "Gamepad",
@@ -24,9 +24,9 @@
     "author": "Marco Klein",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/marcoklein/mobile-browser-gamepad/issues"
+        "url": "https://github.com/marcoklein/remotegamepad/issues"
     },
-    "homepage": "https://github.com/marcoklein/mobile-browser-gamepad#readme",
+    "homepage": "https://github.com/marcoklein/remotegamepad#readme",
     "devDependencies": {
         "@types/jquery": "^3.3.29",
         "@types/peerjs": "0.0.30",

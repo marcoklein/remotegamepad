@@ -1,7 +1,7 @@
 
-import Peer, { DataConnection } from 'peerjs';
-import { PRE_ID, Message, CONNECTION_PROPS } from './../globals';
-import { AbstractPeerConnection } from './../AbstractPeerConnection';
+import Peer from 'peerjs';
+import { PRE_ID, Message, CONNECTION_PROPS } from '../../globals';
+import { AbstractPeerConnection } from '../AbstractPeerConnection';
 import EventEmitter from 'eventemitter3';
 
 

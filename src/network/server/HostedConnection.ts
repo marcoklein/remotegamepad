@@ -1,6 +1,6 @@
 import { SmartPadServer } from "./SmartPadServer";
 import { DataConnection } from "peerjs";
-import { Message } from "../globals";
+import { Message } from "../../globals";
 import { AbstractPeerConnection } from "../AbstractPeerConnection";
 import EventEmitter from 'eventemitter3';
 

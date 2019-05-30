@@ -1,6 +1,6 @@
 
 import Peer, { DataConnection } from 'peerjs';
-import { PRE_ID as PRE_CONNECTION_CODE, CONNECTION_PROPS } from '../globals';
+import { PRE_ID as PRE_CONNECTION_CODE, CONNECTION_PROPS } from '../../globals';
 import { HostedConnection } from './HostedConnection';
 import EventEmitter from 'eventemitter3';
 

@@ -32,7 +32,7 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import { Application } from './Application';
 import screenfull, { Screenfull } from 'screenfull';
-import { SmartPadClient } from './SmartPadClient';
+import { SmartPadClient } from '../network/client/SmartPadClient';
 let fullscreenPlugin: Screenfull = <Screenfull> screenfull;
 
 

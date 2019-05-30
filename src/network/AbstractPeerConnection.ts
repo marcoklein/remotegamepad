@@ -1,4 +1,4 @@
-import { Message } from "./globals";
+import { Message } from "../globals";
 import { DataConnection } from "peerjs";
 
 export abstract class AbstractPeerConnection {
