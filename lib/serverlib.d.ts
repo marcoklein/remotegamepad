@@ -1,2 +1,3 @@
 import { NetworkGamepadAPIClass } from "./server/RemoteGamepadAPI";
-export declare var RemoteGamepadAPI: NetworkGamepadAPIClass;
+declare const RemoteGamepadAPI: NetworkGamepadAPIClass;
+export { RemoteGamepadAPI };

@@ -1,3 +1,5 @@
 import { NetworkGamepadAPIClass } from "./server/RemoteGamepadAPI";
 
-export var RemoteGamepadAPI = NetworkGamepadAPIClass.getInstance();
+const RemoteGamepadAPI = NetworkGamepadAPIClass.getInstance();
+
+export { RemoteGamepadAPI };
