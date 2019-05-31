@@ -42,6 +42,7 @@ export class Pad extends UIElement {
         if (this.pointerIdentifier === identifier) {
             this.pointerIdentifier = null;
             this.mouseActive = false;
+            this.refreshAxis();
         }
     }
 
