@@ -6,17 +6,17 @@ import { RemoteGamepad } from "./RemoteGamepad";
 /**
  * Maps on native web gamepad API.
  */
-export class NetworkGamepadAPIClass {
-    private static _instance: NetworkGamepadAPIClass;
+export class RemoteGamepadAPI {
+    private static _instance: RemoteGamepadAPI;
 
     /**
      * There can always be only one instance of the API.
      */
-    static getInstance(): NetworkGamepadAPIClass {
-        if (!NetworkGamepadAPIClass._instance) {
-            NetworkGamepadAPIClass._instance = new NetworkGamepadAPIClass();
+    static getInstance(): RemoteGamepadAPI {
+        if (!RemoteGamepadAPI._instance) {
+            RemoteGamepadAPI._instance = new RemoteGamepadAPI();
         }
-        return NetworkGamepadAPIClass._instance;
+        return RemoteGamepadAPI._instance;
     }
 
 

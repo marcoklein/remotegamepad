@@ -1,5 +1,5 @@
 import { HostedConnection } from "../network/server/HostedConnection";
-import { NetworkGamepadAPIClass } from "./RemoteGamepadAPI";
+import { RemoteGamepadAPI } from "./RemoteGamepadAPI";
 
 /**
  * Specifications follow https://www.w3.org/TR/gamepad/#gamepad-interface.
@@ -31,7 +31,7 @@ export class RemoteGamepad implements Gamepad {
 
     readonly remote: HostedConnection;
 
-    private readonly api: NetworkGamepadAPIClass;
+    private readonly api: RemoteGamepadAPI;
 
     readonly axes: [number, number, number, number] = [
         0, // pad left  x0
@@ -69,7 +69,7 @@ export class RemoteGamepad implements Gamepad {
         { pressed: false, value: 0, touched: false }
     ];
 
-    constructor(client: HostedConnection, api: NetworkGamepadAPIClass) {
+    constructor(client: HostedConnection, api: RemoteGamepadAPI) {
         this.remote = client;
         this.api = api;
         this.registerClientListeners();

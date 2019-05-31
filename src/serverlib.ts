@@ -1,4 +1,4 @@
-import { NetworkGamepadAPIClass } from "./server/RemoteGamepadAPI";
+import { RemoteGamepadAPI } from "./server/RemoteGamepadAPI";
 
 
 // add remote gamepad api to global object...
@@ -8,7 +8,7 @@ let root: any = typeof self == 'object' && self.self === self && self ||
             {};
 
 // use existing remote gamepad api or load new instance
-const remoteGamepadAPI = root.remoteGamepadAPI || NetworkGamepadAPIClass.getInstance();
+const remoteGamepadAPI: RemoteGamepadAPI = root.remoteGamepadAPI || RemoteGamepadAPI.getInstance();
 root.remoteGamepadAPI = remoteGamepadAPI;
 
 export { remoteGamepadAPI };
