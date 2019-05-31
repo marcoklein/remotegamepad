@@ -6,7 +6,7 @@ import { RemoteGamepad } from "./RemoteGamepad";
 /**
  * Maps on native web gamepad API.
  */
-class NetworkGamepadAPIClass {
+export class NetworkGamepadAPIClass {
     private static _instance: NetworkGamepadAPIClass;
 
     /**
@@ -113,6 +113,3 @@ class NetworkGamepadAPIClass {
     }
 
 }
-
-export = NetworkGamepadAPIClass.getInstance();
-//export var NetworkGamepadAPI = NetworkGamepadAPIClass.getInstance();

@@ -1,6 +1,0 @@
-docs/
-.cache/
-node_modules
-dist/*
-!dist/serverlib.js*
-!dist/serverlib.d.ts

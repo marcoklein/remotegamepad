@@ -1,5 +1,5 @@
 import { HostedConnection } from "../network/server/HostedConnection";
-import { NetworkGamepadAPIClass } from "./serverlib";
+import { NetworkGamepadAPIClass } from "./RemoteGamepadAPI";
 
 /**
  * Specifications follow https://www.w3.org/TR/gamepad/#gamepad-interface.

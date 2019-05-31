@@ -2,19 +2,25 @@
     "name": "remotegamepad",
     "version": "0.3.6",
     "description": "Mobile HTML5 web gamepad for the smartphone directly mapping to the native gamepad API communicating through WebRTC.",
-    "main": "dist/serverlib.js",
+    "main": "lib/serverlib.js",
+    "types": "lib/serverlib.d.ts",
     "scripts": {
-        "prepublishOnly": "concurrently \"npm run build:lib\" \"npm version patch\"",
+        "prepare": "npm run build:lib",
+        "prepublishOnly": "npm version patch",
         "dev": "concurrently \"copyfiles -u 1 src/assets/* dist\"  \"parcel src/*.html --open\"",
         "build:docs": "concurrently \"copyfiles -u 1 src/assets/* docs\" \"parcel build src/*.html -d docs --public-url ./\"",
-        "build:lib": "concurrently \"parcel build ./src/server/serverlib.ts\" \"tsc --project tsconfig-serverlib-declaration.json\"",
+        "build:lib": "tsc --project tsconfig-serverlib-declaration.json",
+        "build:libold": "concurrently \"parcel build ./src/server/serverlib.ts -d lib\" \"tsc --project tsconfig-serverlib-declaration.json\"",
         "build:tsc": "tsc"
     },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/marcoklein/remotegamepad.git"
     },
-    "types": "dist/serverlib.d.ts",
+    "files": [
+        "LICENSE",
+        "lib/**/*"
+    ],
     "keywords": [
         "Gamepad",
         "Mobile",
