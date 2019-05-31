@@ -6,7 +6,8 @@
       "module": "commonjs",
       "lib": ["es2017", "es7", "es6", "dom"],
       "declaration": true,
-      "outDir": "lib",
+      "emitDeclarationOnly": true,
+      "outFile": "lib/serverlib.d.ts",
       "strict": false,
       "esModuleInterop": true
     },

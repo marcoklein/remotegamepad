@@ -7,7 +7,7 @@
     "scripts": {
         "test": "",
         "build:docs": "concurrently \"copyfiles -u 1 src/assets/* docs\" \"parcel build src/*.html -d docs --public-url ./\"",
-        "build:lib": "tsc --project tsconfig-serverlib-declaration.json",
+        "build:lib": "concurrently \"parcel build src/serverlib.ts -d lib\" \"tsc --project tsconfig-serverlib-declaration.json\"",
         "prepare": "npm run build:lib",
         "prepublishOnly": "npm test",
         "version": "git add -A src",
