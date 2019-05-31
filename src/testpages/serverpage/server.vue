@@ -15,8 +15,8 @@ div
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import { SmartPadServer } from '../network/server/SmartPadServer';
-import { HostedConnection } from '../network/server/HostedConnection';
+import { SmartPadServer } from '../../network/server/SmartPadServer';
+import { HostedConnection } from '../../network/server/HostedConnection';
 
 @Component
 export default class TestServerApp extends Vue {

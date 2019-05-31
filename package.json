@@ -5,13 +5,16 @@
     "main": "lib/serverlib.js",
     "types": "lib/serverlib.d.ts",
     "scripts": {
-        "prepare": "npm run build:lib",
-        "prepublishOnly": "npm version patch",
-        "dev": "concurrently \"copyfiles -u 1 src/assets/* dist\"  \"parcel src/*.html --open\"",
+        "test": "",
         "build:docs": "concurrently \"copyfiles -u 1 src/assets/* docs\" \"parcel build src/*.html -d docs --public-url ./\"",
         "build:lib": "tsc --project tsconfig-serverlib-declaration.json",
-        "build:libold": "concurrently \"parcel build ./src/server/serverlib.ts -d lib\" \"tsc --project tsconfig-serverlib-declaration.json\"",
-        "build:tsc": "tsc"
+        "prepare": "npm run build:lib",
+        "prepublishOnly": "npm test",
+        "version": "git add -A src",
+        "postversion": "git push && git push --tags",
+
+        "dev": "concurrently \"copyfiles -u 1 src/assets/* dist\"  \"parcel src/**/*.html --open\""
+
     },
     "repository": {
         "type": "git",
