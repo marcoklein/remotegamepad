@@ -61,13 +61,24 @@ export class Application {
                 axis: axis
             })
         });
-        // add button
+        // add button A
         let buttonA = new Button();
-        buttonA.positionRelative.set(0.8, 0.7);
+        buttonA.positionRelative.set(0.7, 0.7);
         this.addUiElement(buttonA);
         buttonA.events.on('stateChanged', (pressed: boolean) => {
             this.network.sendMessage('buttonUpdate', {
                 index: 0,
+                pressed: pressed
+            });
+        });
+        
+        // add button B
+        let buttonB = new Button();
+        buttonB.positionRelative.set(0.8, 0.6);
+        this.addUiElement(buttonB);
+        buttonB.events.on('stateChanged', (pressed: boolean) => {
+            this.network.sendMessage('buttonUpdate', {
+                index: 1,
                 pressed: pressed
             });
         });

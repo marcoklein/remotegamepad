@@ -38,12 +38,12 @@ export abstract class AbstractPeerConnection {
     /**
      * Keep alive interval in milliseconds.
      */
-    private keepAliveInterval: number = 200;
+    private keepAliveInterval: number = 100;
 
     /**
      * Number of milliseconds the connection waits before closing when sending a keep alive message.
      */
-    private _connectionTimeout: number = 1000;
+    private _connectionTimeout: number = 5000;
     private _connectionTimeoutTimer: any;
 
 
