@@ -106,7 +106,7 @@ export class RemoteGamepad implements Gamepad {
     private disconnect = () => {
         this.connected = false;
         // remove gamepad
-        this.api.gamepads[this.index] = undefined;
+        this.api.remoteGamepads[this.index] = undefined;
         let event = new CustomEvent('gamepaddisconnected', {});
         (<any> event).gamepad = this; // add gamepad to event
         window.dispatchEvent(event);

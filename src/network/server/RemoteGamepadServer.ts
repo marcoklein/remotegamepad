@@ -8,7 +8,7 @@ import EventEmitter from 'eventemitter3';
  * Buttons follow official W3C HTML Gamepad Specifications from
  * https://www.w3.org/TR/gamepad/#remapping
  */
-export class SmartPadServer {
+export class RemoteGamepadServer {
 
     /**
      * Server side WebRTC peer.
@@ -19,12 +19,37 @@ export class SmartPadServer {
      * Connection code for client this server has.
      * Is set during start().
      */
-    _connectionCode: string;
+    private _connectionCode: string;
 
+    /**
+     * Characters that the code generation algorithm uses to build a random connection code.
+     * Per default, this is the character set of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.
+     */
+    codeCharacters: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    /**
+     * Length of a randomly generated connection code.
+     * 5 per default.
+     */
+    connectionCodeLength: number = 5;
+
+    /**
+     * Flag, that is set to true when start() has been called and the Promise not yet been resolved.
+     */
     startingServer: boolean;
 
+    /**
+     * The promise of the starting server.
+     */
+    startPromise: Promise<string>;
+
+    /**
+     * All connected clients.
+     */
     clients: HostedConnection[];
 
+    /**
+     * Listen to client connection events.
+     */
     events: EventEmitter<'client_connected' | 'client_disconnected'> = new EventEmitter();
     
     /**
@@ -34,10 +59,18 @@ export class SmartPadServer {
     }
 
 
-    
-
     /**
-     * Inits server by generating a connection code and setting up listeners.
+     * Starts the server with the given connection code.
+     * If none is given, a random connection code is generated.
+     * 
+     * Due to the nature of WebRTC the desired code might be occupied.
+     * Therefore, the server tries to reconnect (10 times per default), generating a unique code each time.
+     * 
+     * If no connection could be established the returned Promise is rejected.
+     * 
+     * @param connectionCode Desired connection code.
+     * @param numberOfRetries Connection retries before failure.
+     * @return Promise that resolves with the connection code.
      */
     start(connectionCode?: string, numberOfRetries: number = 10): Promise<string> {
         if (this.startingServer || this.peer) {
@@ -47,7 +80,7 @@ export class SmartPadServer {
         this.clients = [];
         // prohibit second server starting to prevent errors
         this.startingServer = true;
-        return new Promise((resolve, reject) => {
+        this.startPromise = new Promise((resolve, reject) => {
             let numberOfTries = 0;
             let establishConnection = () => {
                 let code = connectionCode || this.generateRandomConnectionCode();
@@ -75,7 +108,8 @@ export class SmartPadServer {
             };
 
             establishConnection();
-        })
+        });
+        return this.startPromise;
     }
 
     /**
@@ -114,11 +148,10 @@ export class SmartPadServer {
     /**
      * Helper to generate a random connection code.
      */
-    private generateRandomConnectionCode(numberOfCharacters = 5): string {
+    private generateRandomConnectionCode(): string {
         let result = '';
-        let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        for (let i = 0; i < numberOfCharacters; i++) {
-            result += characters.charAt(Math.floor(Math.random() * characters.length));
+        for (let i = 0; i < this.connectionCodeLength; i++) {
+            result += this.codeCharacters.charAt(Math.floor(Math.random() * this.codeCharacters.length));
         }
         return result;
     }

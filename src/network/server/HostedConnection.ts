@@ -1,4 +1,4 @@
-import { SmartPadServer } from "./SmartPadServer";
+import { RemoteGamepadServer } from "./RemoteGamepadServer";
 import { DataConnection } from "peerjs";
 import { Message } from "../../globals";
 import { AbstractPeerConnection } from "../AbstractPeerConnection";
@@ -12,8 +12,14 @@ export class HostedConnection extends AbstractPeerConnection {
     /**
      * Server that initiated the HostedConnection.
      */
-    readonly server: SmartPadServer;
+    readonly server: RemoteGamepadServer;
+    /**
+     * Unique id of the HostedConnection. Same as the client machine uses.
+     */
     readonly id: string;
+    /**
+     * Listen to certain events of the remote gamepad.
+     */
     readonly events: EventEmitter<'buttonUpdate' | 'axisUpdate' | 'disconnect'> = new EventEmitter();
 
     /**
@@ -23,7 +29,7 @@ export class HostedConnection extends AbstractPeerConnection {
      * @param server 
      * @param connection 
      */
-    constructor(server: SmartPadServer, connection: DataConnection) {
+    constructor(server: RemoteGamepadServer, connection: DataConnection) {
         super();
         this.server = server;
         this.connection = connection;
@@ -33,6 +39,10 @@ export class HostedConnection extends AbstractPeerConnection {
     }
 
 
+    /**
+     * Remves this HostedConnection from its server.
+     * The method closes the connection and emits the disconnect event.
+     */
     private removeFromServer() {
         this.connection.close();
         this.server.removeHostedConnection(this);

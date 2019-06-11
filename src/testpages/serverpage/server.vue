@@ -15,17 +15,17 @@ div
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import { SmartPadServer } from '../../network/server/SmartPadServer';
+import { RemoteGamepadServer } from '../../network/server/RemoteGamepadServer';
 import { HostedConnection } from '../../network/server/HostedConnection';
 
 @Component
 export default class TestServerApp extends Vue {
 
-    server: SmartPadServer;
+    server: RemoteGamepadServer;
     
     beforeCreate() {
         // initialize
-        this.server = new SmartPadServer();
+        this.server = new RemoteGamepadServer();
         this.server.start('catchme2').then((id) => {
             // provide connection code to front end
             this.$data.connectionCode = this.server.connectionCode;
