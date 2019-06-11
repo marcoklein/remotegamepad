@@ -12,7 +12,8 @@
         "prepublishOnly": "npm test",
         "version": "git add -A src",
         "postversion": "git push && git push --tags",
-        "dev": "concurrently \"copyfiles -u 1 src/assets/* dist\"  \"parcel src/**/*.html --open\""
+        "dev": "concurrently \"copyfiles -u 1 src/assets/* dist\"  \"parcel src/**/*.html --open\"",
+        "publish:client": "npm run build:docs && git add -A docs && git commit -m \"new client version\" && git push"
     },
     "repository": {
         "type": "git",

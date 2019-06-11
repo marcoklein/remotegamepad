@@ -53,7 +53,7 @@ export class Application {
     private initUserInterface() {
         // add pad
         let pad = new Pad();
-        pad.positionRelative.set(0.25, 0.7);
+        pad.positionRelative.set(0.2, 0.7);
         this.addUiElement(pad);
         pad.events.on('axisUpdate', (axis: {x: number, y: number}) => {
             this.network.sendMessage('axisUpdate', {
