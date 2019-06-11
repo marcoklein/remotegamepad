@@ -1,6 +1,6 @@
 {
     "name": "remotegamepad",
-    "version": "0.4.5",
+    "version": "0.4.6",
     "description": "Mobile HTML5 web gamepad for the smartphone directly mapping to the native gamepad API communicating through WebRTC.",
     "main": "lib/serverlib.js",
     "types": "lib/serverlib.d.ts",
