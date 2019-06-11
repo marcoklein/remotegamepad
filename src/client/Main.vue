@@ -19,6 +19,8 @@ div
     img#padDarkImage(src='../assets/padDark.png')
     img#padBackgroundDarkImage(src='../assets/padBackgroundDark.png')
     img#buttonAImage(src='../assets/buttonA.png')
+    img#buttonBImage(src='../assets/buttonB.png')
+    img#buttonStartImage(src='../assets/buttonStart.png')
     
   // canvas for rendering
   canvas#gamepadCanvas

@@ -53,7 +53,7 @@ export class Application {
     private initUserInterface() {
         // add pad
         let pad = new Pad();
-        pad.positionRelative.set(0.2, 0.8);
+        pad.positionRelative.set(0.25, 0.7);
         this.addUiElement(pad);
         pad.events.on('axisUpdate', (axis: {x: number, y: number}) => {
             this.network.sendMessage('axisUpdate', {
@@ -61,8 +61,19 @@ export class Application {
                 axis: axis
             })
         });
+        // add button start
+        let buttonStart = new Button(<HTMLImageElement> document.getElementById('buttonStartImage'));
+        buttonStart.positionRelative.set(0.5, 0.1);
+        this.addUiElement(buttonStart);
+        buttonStart.events.on('stateChanged', (pressed: boolean) => {
+            this.network.sendMessage('buttonUpdate', {
+                index: 9,
+                pressed: pressed
+            });
+        });
+
         // add button A
-        let buttonA = new Button();
+        let buttonA = new Button(<HTMLImageElement> document.getElementById('buttonAImage'));
         buttonA.positionRelative.set(0.7, 0.7);
         this.addUiElement(buttonA);
         buttonA.events.on('stateChanged', (pressed: boolean) => {
@@ -71,10 +82,9 @@ export class Application {
                 pressed: pressed
             });
         });
-        
         // add button B
-        let buttonB = new Button();
-        buttonB.positionRelative.set(0.9, 0.6);
+        let buttonB = new Button(<HTMLImageElement> document.getElementById('buttonBImage'));
+        buttonB.positionRelative.set(0.85, 0.6);
         this.addUiElement(buttonB);
         buttonB.events.on('stateChanged', (pressed: boolean) => {
             this.network.sendMessage('buttonUpdate', {

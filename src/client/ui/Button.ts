@@ -17,9 +17,9 @@ export class Button extends UIElement {
      */
     readonly events: EventEmitter<'stateChanged'>;
 
-    constructor() {
+    constructor(image: HTMLImageElement) {
         super();
-        this.image = <HTMLImageElement> document.getElementById('buttonAImage');
+        this.image = image;
         this.events = new EventEmitter();
     }
 
