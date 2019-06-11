@@ -19,7 +19,7 @@ export interface ConnectionListener {
 /**
  * Base class on client side to handle a server connection.
  */
-export class SmartPadClient extends AbstractPeerConnection {
+export class RemoteGamepadClient extends AbstractPeerConnection {
 
     /**
      * Underlying peerjs connection.
@@ -42,7 +42,7 @@ export class SmartPadClient extends AbstractPeerConnection {
      * 
      * @param connectionCode 
      */
-    connect(connectionCode: string): Promise<SmartPadClient> {
+    connect(connectionCode: string): Promise<RemoteGamepadClient> {
         if (this._isConnecting || this.peer) {
             console.warn('Connection attempt during ongoing connection.');
             return;

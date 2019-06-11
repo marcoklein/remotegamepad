@@ -32,7 +32,7 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import { Application } from './Application';
 import screenfull, { Screenfull } from 'screenfull';
-import { SmartPadClient } from '../network/client/SmartPadClient';
+import { RemoteGamepadClient } from '../network/client/RemoteGamepadClient';
 let fullscreenPlugin: Screenfull = <Screenfull> screenfull;
 
 
@@ -40,7 +40,7 @@ let fullscreenPlugin: Screenfull = <Screenfull> screenfull;
 export default class Main extends Vue {
     application: Application;
 
-    network: SmartPadClient = null;
+    network: RemoteGamepadClient = null;
     dismissCountDown = 0;
     dismissSecs = 5;
     alertWarningMessage = '';

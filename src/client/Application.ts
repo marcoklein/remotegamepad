@@ -1,7 +1,7 @@
 import { UIElement } from "./ui/UIElement";
 import { Pad } from "./ui/Pad";
 import { Button } from "./ui/Button";
-import { SmartPadClient } from '../network/client/SmartPadClient';
+import { RemoteGamepadClient } from '../network/client/RemoteGamepadClient';
 
 /**
  * Main logic for the client.
@@ -19,7 +19,7 @@ export class Application {
      */
     uiElements: UIElement[];
 
-    network: SmartPadClient;
+    network: RemoteGamepadClient;
 
     /**
      * Initiates a new application with given HTML5 canvas for rendering.
@@ -44,7 +44,7 @@ export class Application {
         this.resizeCanvas();
         window.requestAnimationFrame(() => this.renderLoop());
 
-        this.network = new SmartPadClient();
+        this.network = new RemoteGamepadClient();
     }
 
     /**

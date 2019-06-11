@@ -1,6 +1,13 @@
 import { Message } from "../globals";
 import { DataConnection } from "peerjs";
 
+/**
+ * Super class of the client and server connection.
+ * 
+ * Implements basic message sending and keep alive functionality.
+ * The keep alive mechanism is active per default and continuously exchanges ping pong messages.
+ * This ensures that the WebRTC connection stays active and measures the latency.
+ */
 export abstract class AbstractPeerConnection {
     
     /**
@@ -24,11 +31,21 @@ export abstract class AbstractPeerConnection {
      * Therefore, the client sends keep alive messages in short intervals to esnure a stable connection.
      */
     private _sendKeepAlive: boolean;
-    private keepAliveTimeout: any;
+    /**
+     * Timeout to send the next keep alive message.
+     */
+    private _keepAliveTimer: any;
     /**
      * Keep alive interval in milliseconds.
      */
-    private keepAliveInterval: number = 70;
+    private keepAliveInterval: number = 200;
+
+    /**
+     * Number of milliseconds the connection waits before closing when sending a keep alive message.
+     */
+    private _connectionTimeout: number = 1000;
+    private _connectionTimeoutTimer: any;
+
 
     private lastPingId: number;
     private lastPingStart: number;
@@ -113,7 +130,12 @@ export abstract class AbstractPeerConnection {
      */
     turnOffKeepAlive() {
         this._sendKeepAlive = false;
-        clearTimeout(this.keepAliveTimeout);
+        this.clearTimeouts();
+    }
+
+    private clearTimeouts() {
+        clearTimeout(this._keepAliveTimer);
+        clearTimeout(this._connectionTimeoutTimer);
     }
 
 
@@ -126,7 +148,7 @@ export abstract class AbstractPeerConnection {
         this.lastPingStart = Date.now();
 
         // schedule next keep alive message
-        this.keepAliveTimeout = setTimeout(() => {
+        this._keepAliveTimer = setTimeout(() => {
             this.sendKeepAliveMessage();
         }, this.keepAliveInterval);
     }
@@ -142,6 +164,14 @@ export abstract class AbstractPeerConnection {
         // calculate average ping
         let total = this._pings.reduce((a, b) => { return a + b; });
         this._averagePing = total / this._pings.length;
+
+        // reset connection timeout timer
+        clearTimeout(this._connectionTimeoutTimer);
+        this._connectionTimeoutTimer = setTimeout(() => {
+            // close connection if the connection timeout is reached
+            this._connection.close();
+            console.log('manual connection close');
+        }, this.connectionTimeout);
     }
     
     /* Callbacks */
@@ -167,10 +197,12 @@ export abstract class AbstractPeerConnection {
     }
 
     private onConnectionCloseCallback = () => {
+        this.clearTimeouts();
         this.onConnectionClose();
     }
 
     private onConnectionErrorCallback = (err: any) => {
+        this.clearTimeouts();
         this.onConnectionError(err);
     }
 
@@ -192,6 +224,9 @@ export abstract class AbstractPeerConnection {
         }
     }
 
+    /**
+     * Internally used PeerJS DataConnection.
+     */
     get connection(): DataConnection {
         return this._connection;
     }
@@ -210,5 +245,14 @@ export abstract class AbstractPeerConnection {
 
     get averagePing(): number {
         return this._averagePing;
+    }
+
+    set connectionTimeout(timeout: number) {
+        this._connectionTimeout = timeout;
+        clearTimeout(this._connectionTimeoutTimer);
+    }
+
+    get connectionTimeout(): number {
+        return this._connectionTimeout;
     }
 }
