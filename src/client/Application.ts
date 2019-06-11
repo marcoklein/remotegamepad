@@ -74,7 +74,7 @@ export class Application {
         
         // add button B
         let buttonB = new Button();
-        buttonB.positionRelative.set(0.8, 0.6);
+        buttonB.positionRelative.set(0.9, 0.6);
         this.addUiElement(buttonB);
         buttonB.events.on('stateChanged', (pressed: boolean) => {
             this.network.sendMessage('buttonUpdate', {
