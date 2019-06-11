@@ -58,7 +58,7 @@ export class Application {
         let lastAxisUpdate = 0;
         pad.events.on('axisUpdate', (axis: {x: number, y: number}) => {
             // only send axis update every 30 ms
-            if (axis.x !== 0 && axis.y !== 0 && Date.now() - lastAxisUpdate > 30) {
+            if ((axis.x === 0 && axis.y === 0) || Date.now() - lastAxisUpdate > 30) {
                 lastAxisUpdate = Date.now();
                 this.network.sendMessage('axisUpdate', {
                     index: 0,
