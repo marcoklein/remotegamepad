@@ -52,7 +52,7 @@ export class Application {
      */
     private initUserInterface() {
         // add pad
-        let pad = new Pad();
+        /*let pad = new Pad();
         pad.positionRelative.set(0.2, 0.7);
         this.addUiElement(pad);
         let lastAxisUpdate = 0;
@@ -65,7 +65,28 @@ export class Application {
                     axis: axis
                 });
             }
+        });*/
+        // add left button
+        let buttonLeft = new Button(<HTMLImageElement> document.getElementById('buttonLeftImage'));
+        buttonLeft.positionRelative.set(0.1, 0.67);
+        this.addUiElement(buttonLeft);
+        buttonLeft.events.on('stateChanged', (pressed: boolean) => {
+            this.network.sendMessage('buttonUpdate', {
+                index: 14,
+                pressed: pressed
+            });
         });
+        // add right button
+        let buttonRight = new Button(<HTMLImageElement> document.getElementById('buttonRightImage'));
+        buttonRight.positionRelative.set(0.3, 0.67);
+        this.addUiElement(buttonRight);
+        buttonRight.events.on('stateChanged', (pressed: boolean) => {
+            this.network.sendMessage('buttonUpdate', {
+                index: 15,
+                pressed: pressed
+            });
+        });
+
         // add button start
         let buttonStart = new Button(<HTMLImageElement> document.getElementById('buttonStartImage'));
         buttonStart.positionRelative.set(0.5, 0.1);
@@ -79,7 +100,7 @@ export class Application {
 
         // add button A
         let buttonA = new Button(<HTMLImageElement> document.getElementById('buttonAImage'));
-        buttonA.positionRelative.set(0.7, 0.7);
+        buttonA.positionRelative.set(0.85, 0.6);
         this.addUiElement(buttonA);
         buttonA.events.on('stateChanged', (pressed: boolean) => {
             this.network.sendMessage('buttonUpdate', {
@@ -89,7 +110,7 @@ export class Application {
         });
         // add button B
         let buttonB = new Button(<HTMLImageElement> document.getElementById('buttonBImage'));
-        buttonB.positionRelative.set(0.85, 0.6);
+        buttonB.positionRelative.set(0.7, 0.7);
         this.addUiElement(buttonB);
         buttonB.events.on('stateChanged', (pressed: boolean) => {
             this.network.sendMessage('buttonUpdate', {

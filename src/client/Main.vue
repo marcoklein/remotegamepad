@@ -21,6 +21,8 @@ div
     img#buttonAImage(src='../assets/buttonA.png')
     img#buttonBImage(src='../assets/buttonB.png')
     img#buttonStartImage(src='../assets/buttonStart.png')
+    img#buttonLeftImage(src='../assets/buttonLeft.png')
+    img#buttonRightImage(src='../assets/buttonRight.png')
     
   // canvas for rendering
   canvas#gamepadCanvas
