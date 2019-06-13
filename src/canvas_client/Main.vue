@@ -63,7 +63,15 @@ export default class Main extends Vue {
         // init application with canvas
         this.application = new Application(canvas);
 
-        this.application.network.connect('catchme2').catch((reason) => {
+        let storedCode = window.localStorage.getItem('connectionCode') || '';
+        let connectionCode = null;
+        //do {
+            connectionCode = prompt('Please Enter the Connection Code', storedCode);
+        //} while (!connectionCode);
+        window.localStorage.setItem('connectionCode', connectionCode);
+
+
+        this.application.network.connect(connectionCode).catch((reason) => {
             console.log('connect error', reason);
             this.showWarning('Connect Error: ' + reason);
         });
