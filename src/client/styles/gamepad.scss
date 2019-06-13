@@ -1,0 +1,55 @@
+
+
+#sceneGamepad {
+    display: none;
+    
+    /* Direction Buttons */
+    .gamepadButtonLeft {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: $directionButtonWidth;
+        height: $directionButtonHeight;
+        background-color: #AAA;
+
+    }
+
+    .gamepadButtonRight {
+        position: absolute;
+        bottom: 0;
+        left: $directionButtonWidth;
+        width: $directionButtonWidth;
+        height: $directionButtonHeight;
+        background-color: #AAA;
+
+        margin-left: $buttonMargin;
+    }
+
+    /* Action Buttons */
+
+    // positioned bottom right
+    .gamepadButtonA {
+        /*background-image: url(../assets/buttonA.png);
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        background-size: auto;*/
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: $actionButtonWidth;
+        height: $actionButtonHeight;
+        background-color: green;
+    }
+
+    // above buttonA
+    .gamepadButtonB {
+        position: absolute;
+        right: 0;
+        bottom: $actionButtonHeight;
+        width: $actionButtonWidth;
+        height: $actionButtonHeight;
+        background-color: yellow;
+
+        margin-bottom: $buttonMargin;
+    }
+}

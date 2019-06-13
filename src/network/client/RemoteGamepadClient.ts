@@ -27,9 +27,12 @@ export class RemoteGamepadClient extends AbstractPeerConnection {
     protected peer: Peer;
     listeners: ConnectionListener[] = [];
 
+    private connectionPromise: Promise<RemoteGamepadClient>;
     private _isConnecting: boolean;
 
     readonly events: EventEmitter<'peerError' | 'peerClose' | 'connectionError' | 'connectionClose'> = new EventEmitter();
+
+    debug: boolean = true;
 
     constructor() {
         super();
@@ -40,22 +43,26 @@ export class RemoteGamepadClient extends AbstractPeerConnection {
      * Connects to a server using given connection code.
      * The connection code is provided by the server.
      * 
-     * @param connectionCode 
+     * If the function is called during an ongoing connection the same Promise is returned.
+     * 
+     * @param connectionCode Connection code of the server.
      */
     connect(connectionCode: string): Promise<RemoteGamepadClient> {
         if (this._isConnecting || this.peer) {
             console.warn('Connection attempt during ongoing connection.');
-            return;
+            return this.connectionPromise;
         }
-        console.log('Connecting...');
+        if (this.debug) console.log('Connecting...');
         this._isConnecting = true;
-        return new Promise((resolve, reject) => {
+        this.connectionPromise = new Promise((resolve, reject) => {
             // create new peer
             this.peer = new Peer(CONNECTION_PROPS);
 
+            // attach listeners
             this.peer.on('open', (id: string) => {
-                console.log('peer open ', id);
+                if (this.debug) console.log('peer open ', id);
 
+                // establish connection with open peer
                 this.connection = this.peer.connect(PRE_ID + connectionCode);
                     
                 // remove temporary event listener
@@ -65,9 +72,10 @@ export class RemoteGamepadClient extends AbstractPeerConnection {
                 }
                 // listen for open
                 let onConnectionOpen = () => {
-                    console.log('Connection successfull.');
+                    if (this.debug) console.log('Connection successfull.');
                     removeTemporaryEventListeners();
                     this.initConnectedPeer();
+                    this._isConnecting = false;
                     resolve(this);
                 }
                 // listen for error
@@ -76,11 +84,12 @@ export class RemoteGamepadClient extends AbstractPeerConnection {
                     removeTemporaryEventListeners();
                     this.peer.destroy();
                     this.peer = null;
+                    this._isConnecting = false;
                     reject(err);
                 }
                 // listen to open and error event of connect
                 this.connection.on('open', onConnectionOpen);
-                this.connection.on('close', () => {
+                /*this.connection.on('close', () => {
                     console.error('pre close');
                 });
                 this.connection.on('data', () => {
@@ -88,9 +97,9 @@ export class RemoteGamepadClient extends AbstractPeerConnection {
                 })
                 this.connection.on('error', (err) => {
                     console.error('pre error: ', err);
-                });
+                });*/
                 this.peer.on('error', onPeerError);
-                this.peer.on('close', () => {
+                /*this.peer.on('close', () => {
                     console.error('peer pre on close');
                 });
                 this.peer.on('open', (id: string) => {
@@ -98,10 +107,12 @@ export class RemoteGamepadClient extends AbstractPeerConnection {
                 });
                 this.peer.on('connection', () => {
                     console.error('peer pre conn');
-                })
+                });*/
             });
 
         });
+
+        return this.connectionPromise;
     }
 
     /**
@@ -121,10 +132,10 @@ export class RemoteGamepadClient extends AbstractPeerConnection {
     /* Callbacks */
 
     protected onMessage(msg: Message): void {
-        console.log('on message', msg);
+        if (this.debug) console.log('on message', msg);
     }
     protected onConnectionClose(): void {
-        console.log('on connection close')
+        if (this.debug) console.log('on connection close')
         this.events.emit('connectionClose');
     }
     protected onConnectionError(err: any): void {
@@ -133,7 +144,7 @@ export class RemoteGamepadClient extends AbstractPeerConnection {
     }
 
     private onPeerClose = () => {
-        console.log('on peer close');
+        if (this.debug) console.log('on peer close');
         this.events.emit('peerClose');
     }
 
