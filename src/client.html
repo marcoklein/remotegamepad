@@ -1,0 +1,57 @@
+<!DOCTYPE html> <!-- the main language of the page declared -->
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <!-- a viewport declaration which does not disable zooming -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <!-- a descriptive label for the page -->
+    <title>Smartphone Gamepad</title>
+
+    <link rel="stylesheet" type="text/css" href="./client/main.scss">
+
+</head>
+
+<body>
+
+    <!-- Input the Connection Code -->
+    <div id="sceneConnectionCode" class="container">
+        <h1 class="mt-5 mb-5">Enter the Connection Code</h1>
+        <!-- TODO replace input text with dedicated number buttons to input code more easily -->
+
+        <div id="inputConnectionCode">
+            <div class="input-group">
+                <input id="connectionCodeInput" type="text" class="form-control" placeholder="Connection Code">
+                <div class="input-group-append">
+                    <button id="connectButton" class="btn btn-outline-secondary" type="button">Connect</button>
+                </div>
+            </div>
+        </div>
+        <div id="connecting">
+            Connecting...
+        </div>
+
+    </div>
+
+    <!-- Renders the Gamepad -->
+    <div id="sceneGamepad" class="fullsize">
+        <div id="gamepadLayoutDefault" class="fullsize">
+            <div class="gamepadButtonLeft">
+
+            </div>
+            <div class="gamepadButtonRight">
+                
+            </div>
+            <div class="gamepadButtonA">
+                
+            </div>
+            <div class="gamepadButtonB">
+                
+            </div>
+        </div>
+    </div>
+
+    <script src="./client/main.ts"></script>
+</body>
+
+</html>

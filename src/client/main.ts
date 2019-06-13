@@ -32,6 +32,9 @@ function onConnectButtonClick() {
     }
     network.connect(connectionCode).then((client) => {
         console.log('Connection successfull.');
+        // move to next scene
+        $('#sceneConnectionCode').hide();
+        $('#sceneGamepad').show();
     }).catch((error) => {
         console.error('Error on connection: ', error);
     }).finally(() => {
