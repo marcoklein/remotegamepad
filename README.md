@@ -31,6 +31,18 @@ In the present, the user interface supports one standard layout with one analog 
 
 For rendering, the front end uses a HTML5 canvas that always resizes to fill the full screen. A pad and button class provide the logic. They offer an easy way to enhance the interface.
 
+### Connection States and Screens
+The UI has three connection states:
+1. Disconnected
+    1. Enter Connection Code -> Connecting
+2. Connecting
+    1. Failure -> Disconnected
+    1. Success -> Connected
+3. Connected
+    1. Lost Connection -> Disconnected
+
+Each state switches the appropriate screen.
+
 ## Connection Handling through WebRTC
 The project uses PeerJS for connection handling. The library provides a JavaScript implementation of the technology. Dedicated client and server classes handle the connection to fulfill special requirements of the gamepad application. In particular, client and server regularly send keep alive and ping messages. This is due to different browser implementations and some browser put a connection to sleep if the traffic is low.
 

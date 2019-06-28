@@ -7,11 +7,8 @@ import { RemoteGamepadClient } from '../network/client/RemoteGamepadClient';
 let network: RemoteGamepadClient;
 
 function init() {
-
     $('#connectButton').click(onConnectButtonClick);
 }
-
-
 
 /**
  * Button clicked to connect.
@@ -43,16 +40,6 @@ function onConnectButtonClick() {
         $('#connecting').hide();
     });
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
