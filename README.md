@@ -16,7 +16,24 @@ To try out the library follow these steps:
 1. Input the pairing code
 1. Play with the gamepad
 
-# Three Main Components
+# Usage
+## Custom Remote Gamepad User Interface
+Users access the remote gamepad on their smartphones. You may want to customize the layout and design of the gamepad.
+
+First, install the project via:
+
+```shell
+npm install remotegamepad
+```
+
+Then import the client module:
+
+```ts
+import { RemoteGamepadClient } from 'remotegamepad/client';
+```
+
+
+# Architectural Design
 The solution addresses three primary concerns:
 
 1. The smartphone gamepad user interface
