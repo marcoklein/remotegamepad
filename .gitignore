@@ -2,6 +2,10 @@
 dist/
 lib/
 
+client/**/*
+!client/index.ts
+!client/README.md
+
 */**/*-unpublished.js
 
 

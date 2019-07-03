@@ -7,12 +7,12 @@
       "lib": ["es2017", "es7", "es6", "dom"],
       "declaration": true,
       "emitDeclarationOnly": true,
-      "outDir": "lib/",
+      "outDir": "client/",
       "strict": false,
       "esModuleInterop": true
     },
     "files": [
-        "./src/client.ts"
+        "./client/index.ts"
     ]
   }
 
