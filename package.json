@@ -2,19 +2,25 @@
     "name": "remotegamepad",
     "version": "0.4.10",
     "description": "Mobile HTML5 web gamepad for the smartphone directly mapping to the native gamepad API communicating through WebRTC.",
-    "main": "lib/serverlib.js",
-    "types": "lib/serverlib.d.ts",
+    "main": "server/serverlib.js",
+    "types": "server/serverlib.d.ts",
     "scripts": {
         "test": "",
-        "build:docs": "concurrently \"copyfiles -u 1 src/assets/* docs\" \"parcel build src/*.html -d docs --public-url ./\"",
-        "build:lib": "concurrently \"parcel build src/serverlib.ts -d lib\" \"tsc --project tsconfig-serverlib-declaration.json\" \"parcel build src/client.ts -d client\" \"tsc --project tsconfig-client-declaration.json\"",
-        "build:lib:client": "parcel build src/client.ts -d client/ && tsc --project tsconfig-client-declaration.json && renamer --find client --replace index \"client/*\"",
+        "build:docs": "copyfiles -u 1 src/assets/* docs & parcel build src/*.html -d docs --public-url ./",
+
         
-        "prepare": "npm run build:lib",
+        "build":            "npm run build:client & npm run build:server & npm run build:server:lib",
+        "build:client":     "rimraf client/index.* && parcel build src/client.ts -d client/ && tsc --project tsconfig-client-declaration.json && renamer --find client. --replace index. \"client/*\"",
+        "build:server":     "rimraf server/index.* && parcel build src/server.ts -d server/ && tsc --project tsconfig-server-declaration.json && renamer --find server. --replace \"index.\" \"server/*\"",
+        "build:server:lib": "parcel build src/serverlib.ts -d server/ && tsc --project tsconfig-serverlib-declaration.json",
+        "build:clear":      "rimraf client/ server/",
+
+
+        "prepare": "npm run build",
         "prepublishOnly": "npm test",
         "version": "git add -A src",
         "postversion": "git push && git push --tags",
-        "dev": "concurrently \"copyfiles -u 1 src/assets/* dist\"  \"parcel src/**/*.html --open\""
+        "dev": "copyfiles -u 1 src/assets/* dist & parcel src/**/*.html --open"
     },
     "repository": {
         "type": "git",
@@ -52,6 +58,7 @@
         "parcel-bundler": "^1.12.3",
         "pug": "^2.0.3",
         "renamer": "^1.1.2",
+        "rimraf": "^2.6.3",
         "sass": "^1.20.1",
         "screenfull": "^4.2.0",
         "typescript": "^3.4.5",
