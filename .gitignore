@@ -1,10 +1,12 @@
 
 dist/
-lib/
 
-client/**/*
-!client/index.ts
-!client/README.md
+# exclude generate lib folders of npm publish
+lib/
+client/
+server/
+
+
 
 */**/*-unpublished.js
 
