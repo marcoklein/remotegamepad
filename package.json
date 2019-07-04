@@ -24,9 +24,8 @@
     },
     "files": [
         "LICENSE",
-        "lib/**/*",
         "client/**/*",
-        "dist/serverlib.js*"
+        "server/**/*"
     ],
     "keywords": [
         "Gamepad",
