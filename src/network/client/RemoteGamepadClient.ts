@@ -25,10 +25,10 @@ export class RemoteGamepadClient extends AbstractPeerConnection {
      * Underlying peerjs connection.
      */
     protected peer: Peer;
-    listeners: ConnectionListener[] = [];
+    private listeners: ConnectionListener[] = [];
 
     private connectionPromise: Promise<RemoteGamepadClient>;
-    private _isConnecting: boolean;
+    private _isConnecting: boolean = false;
 
     readonly events: EventEmitter<'peerError' | 'peerClose' | 'connectionError' | 'connectionClose'> = new EventEmitter();
 
