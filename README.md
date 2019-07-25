@@ -1,6 +1,6 @@
 # Remote Gamepad
-The Remote Gamepad project brings a Gamepad on the smartphone and communicates directly with the native gamepad API.
-Thus, projects and games that are already supporting gamepads need only to include the project and show the connection code.
+The Remote Gamepad project brings a Gamepad on the smartphone and maps directly on the native gamepad API.
+Thus, projects and games that already support gamepads only need to include the project and show the connection code.
 The system utilizes the WebRTC technology for direct client to client communication among browsers!
 
 I created this project from a personal motivation, as there was no properly working solution out there.
