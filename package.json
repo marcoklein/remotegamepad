@@ -6,7 +6,7 @@
     "types": "server/serverlib.d.ts",
     "scripts": {
         "test": "",
-        "build:docs": "copyfiles -u 1 src/assets/* docs & parcel build src/*.html -d docs --public-url ./",
+        "build:docs": "rimraf docs/**/* copyfiles -u 1 src/assets/* docs & parcel build src/*.html -d docs --public-url ./ --no-source-maps",
         "build": "npm run build:client & npm run build:server & npm run build:server:lib",
         "build:clear": "rimraf client/ server/",
         "build:client": "rimraf client/**/* && parcel build src/client.ts -d client/ --out-file index.js && tsc --project tsconfig-client-declaration.json",
