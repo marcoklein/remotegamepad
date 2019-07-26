@@ -1,4 +1,4 @@
-import { RemoteGamepadAPI } from "./server/RemoteGamepadAPI";
+import { RemoteGamepadAPI } from "./serverlib/RemoteGamepadAPI";
 
 
 // add remote gamepad api to global object...
