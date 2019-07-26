@@ -1,3 +1,6 @@
+[![npm version](https://badge.fury.io/js/remotegamepad.svg)](https://badge.fury.io/js/remotegamepad)
+
+
 # Remote Gamepad
 The Remote Gamepad project brings a Gamepad on the smartphone and maps directly on the native gamepad API.
 Thus, projects and games that already support gamepads only need to include the project and show the connection code.
