@@ -73,7 +73,7 @@ export class RemoteGamepadAPI {
         // create and start smart pad server
         this.server = new RemoteGamepadServer();
         // start server with default connection code
-        this.server.start('catchme2').then((connectionCode) => {
+        this.server.start().then((connectionCode) => {
             console.log('RemoteGamepad Library Ready!\nConnect Gamepads With Connection Code "' + connectionCode + '"');
         }).catch(reason => {
             console.error('Unable to start the RemoteGamepad Server:', reason);
