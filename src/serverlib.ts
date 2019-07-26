@@ -11,4 +11,4 @@ let root: any = typeof self == 'object' && self.self === self && self ||
 const remoteGamepadAPI: RemoteGamepadAPI = root.remoteGamepadAPI || RemoteGamepadAPI.getInstance();
 root.remoteGamepadAPI = remoteGamepadAPI;
 
-export { remoteGamepadAPI };
+export default remoteGamepadAPI;

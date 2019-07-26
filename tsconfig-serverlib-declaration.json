@@ -7,7 +7,7 @@
       "lib": ["es2017", "es7", "es6", "dom"],
       "declaration": true,
       "emitDeclarationOnly": true,
-      "outFile": "server/serverlib.d.ts",
+      "outDir": "server/",
       "strict": false,
       "esModuleInterop": true
     },

@@ -4,4 +4,6 @@
 import { RemoteGamepadServer } from "./network/server/RemoteGamepadServer";
 
 
-export { RemoteGamepadServer };
+export default RemoteGamepadServer;
+
+export * from "./network/server/RemoteGamepadServer";

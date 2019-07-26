@@ -4,4 +4,5 @@
 import { RemoteGamepadClient } from "./network/client/RemoteGamepadClient";
 
 
-export { RemoteGamepadClient };
+export default RemoteGamepadClient;
+export * from "./network/client/RemoteGamepadClient";
