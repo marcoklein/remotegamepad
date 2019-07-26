@@ -230,6 +230,13 @@ export abstract class AbstractPeerConnection {
     get connection(): DataConnection {
         return this._connection;
     }
+
+    /**
+     * Returns true, if the peer is connected.
+     */
+    get isConnected(): boolean {
+        return this._connection.open;
+    }
     
     /**
      * WebRTC connections are unreliable if data is sent sporadic.
