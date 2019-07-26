@@ -1,10 +1,10 @@
 
-dist/
+/dist/
 
 # exclude generate lib folders of npm publish
-lib/
-client/
-server/
+/lib/
+/client/
+/server/
 
 
 

@@ -1,7 +1,7 @@
 import { UIElement } from "./ui/UIElement";
 import { Pad } from "./ui/Pad";
 import { Button } from "./ui/Button";
-import { RemoteGamepadClient } from '../network/client/RemoteGamepadClient';
+import { RemoteGamepadClient } from '../../../src/network/client/RemoteGamepadClient';
 
 /**
  * Main logic for the client.

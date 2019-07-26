@@ -1,7 +1,7 @@
 
 
 import $ from 'jquery';
-import { RemoteGamepadClient } from '../network/client/RemoteGamepadClient';
+import { RemoteGamepadClient } from '../../../src/network/client/RemoteGamepadClient';
 
 
 let network: RemoteGamepadClient;
