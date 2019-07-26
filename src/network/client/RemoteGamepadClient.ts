@@ -38,6 +38,44 @@ export class RemoteGamepadClient extends AbstractPeerConnection {
         super();
     }
 
+    /**
+     * Helper function to send a change to a button.
+     * Uses the sendMessage() function internally with the type 'buttonUpdate'.
+     * 
+     * @param buttonId Index of the button. See https://www.w3.org/TR/gamepad/#remapping for all indices.
+     * @param pressed True if the button is pressed. False if not.
+     */
+    sendButtonUpdate(buttonId: number, pressed: boolean) {
+        this.sendMessage('buttonUpdate',
+            {
+                index: buttonId,
+                pressed: pressed
+            }
+        );
+    }
+    
+    /**
+     * Helper function to send a change to an axis.
+     * Uses the sendMessage() function internally with the type 'axisUpdate'.
+     * 
+     * Update either the axes of the left pad or the axes on the right pad.
+     * X- and y-axes are always updated at the same time.
+     * 
+     * @param pad Pad position to update axes of. Either left or right one. See https://www.w3.org/TR/gamepad/#remapping for a visual.
+     * @param x X-value of the axis.
+     * @param y Y-value of the axis.
+     */
+    sendAxisUpdate(pad: "LeftPad" | "RightPad", x: number, y: number) {
+        let axisId = pad === "LeftPad" ? 0 : 1;
+        this.sendMessage('axisUpdate',
+            {
+                index: axisId,
+                x: x,
+                y: y
+            }
+        );
+    }
+
 
     /**
      * Connects to a server using given connection code.

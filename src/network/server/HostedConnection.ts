@@ -57,8 +57,8 @@ export class HostedConnection extends AbstractPeerConnection {
             case 'axisUpdate': {
                 // axis updates are sent with one index and two axis
                 let axisIndex = msg.data.index * 2;
-                this.events.emit('axisUpdate', axisIndex, msg.data.axis.x);
-                this.events.emit('axisUpdate', axisIndex + 1, msg.data.axis.y);
+                this.events.emit('axisUpdate', axisIndex, msg.data.x);
+                this.events.emit('axisUpdate', axisIndex + 1, msg.data.y);
                 break;
             }
             case 'buttonUpdate': {
