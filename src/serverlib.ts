@@ -8,7 +8,7 @@ let root: any = typeof self == 'object' && self.self === self && self ||
             {};
 
 // use existing remote gamepad api or load new instance
-const remoteGamepadAPI: RemoteGamepadAPI = root.remoteGamepadAPI || RemoteGamepadAPI.getInstance();
+var remoteGamepadAPI: RemoteGamepadAPI = root.remoteGamepadAPI || RemoteGamepadAPI.getInstance();
 root.remoteGamepadAPI = remoteGamepadAPI;
 
 export default remoteGamepadAPI;
